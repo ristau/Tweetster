@@ -78,7 +78,7 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
     
     let cell = tableView.dequeueReusableCell(withIdentifier: "TweetCell", for: indexPath) as! TweetCell
 
-    cell.backgroundColor = UIColor(red:0.92, green:0.98, blue:0.99, alpha:1.0) // hex# ebfbfd // color for retweet and save
+    //cell.backgroundColor = UIColor(red:0.92, green:0.98, blue:0.99, alpha:1.0) // hex# ebfbfd // color for retweet and save
     cell.selectionStyle = .none
     
     if let tweet = tweets?[indexPath.row] {
@@ -241,14 +241,22 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
   
   
   
-    /*
+  
     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+    
+      if segue.identifier == "Detail" {
+        
+        let cell = sender as! TweetCell
+        let sendingTweet = cell.tweet
+        let detailVC = segue.destination as! TweetDetailViewController
+        detailVC.tweet = sendingTweet
+        detailVC.replies = tweets // update this for replies 
+        
+      }
+  
+  
+     }
+  
   }

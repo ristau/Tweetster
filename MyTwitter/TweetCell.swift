@@ -9,6 +9,9 @@
 import UIKit
 import AFNetworking
 
+protocol TweetCellDelegator {
+  func callSegueFromCell(myData dataobject: User)
+}
 
 class TweetCell: UITableViewCell {
   
@@ -18,7 +21,11 @@ class TweetCell: UITableViewCell {
   @IBOutlet weak var nameLabel: UILabel!
   @IBOutlet weak var screenNameLabel: UILabel!
   @IBOutlet weak var profileImage: UIImageView!
+  @IBOutlet weak var dateTextLabel: UILabel!
   
+  
+  @IBOutlet weak var replyCountLabel: UILabel!
+  @IBOutlet weak var replyButton: UIButton!
   @IBOutlet weak var saveButton: UIButton!
   @IBOutlet weak var retweetButton: UIButton!
   
@@ -28,21 +35,30 @@ class TweetCell: UITableViewCell {
   var rtCount: Int?
   var originalTweetID: String?
   var retweetID: String?
+  var formatter = DateFormatter()
   
   var tweet: Tweet! {
     
     didSet {
-      
+  
       tweetTextLabel.text = tweet.text
   
-      
       nameLabel.text = tweet.user?.name!
       screenNameLabel.text = ("@" + (tweet.user?.screenname!)!)
       
       if let profileUrl = tweet.user?.profileUrl {
         profileImage.setImageWith(profileUrl)
       }
+      
+      if let date = tweet?.timestamp {
+        
+        formatter.timeStyle = .short
+        formatter.dateStyle = .short
+        dateTextLabel.text = formatter.string(from: date)
+      }
 
+
+      
       if let retweetedStatus = tweet.retweetedStatus {
         let retweet = Tweet.tweetAsDictionary(tweet.retweetedStatus!)
         originalTweetID = retweet.idStr

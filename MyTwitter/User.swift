@@ -13,7 +13,9 @@ class User: NSObject {
   var name: String?
   var screenname: String?
   var profileUrl: URL?
-  var tagline: String?
+  //var tagline: String?
+  var followersCount: Int?
+  var followingCount: Int?
   
   var dictionary: NSDictionary?
   
@@ -28,8 +30,13 @@ class User: NSObject {
       profileUrl = URL(string: profileUrlString)
     }
     
-    tagline = dictionary["description"] as? String
-   
+ //   tagline = dictionary["description"] as? String
+    //followersCount = dictionary["followers_count"] as? Int
+    //followingCount = dictionary["friends_count"] as? Int
+    
+    followersCount = 10
+    followingCount = 20
+    
   }
   
   // Setting up Persisitence for Current User
@@ -42,20 +49,20 @@ class User: NSObject {
     get {
       
       if _currentUser == nil {
-      
+        
         let defaults = UserDefaults.standard
         let userData = defaults.object(forKey: "currentUserData") as? Data
-
+        
         if let userData = userData{
           
           let dictionary = try! JSONSerialization.jsonObject(with: userData, options: .allowFragments)
-          
           _currentUser = User(dictionary: dictionary as! NSDictionary)
         }
       }
       
       return _currentUser
-      }
+    }
+
     
     set(user) {
       _currentUser = user

@@ -47,6 +47,8 @@ class Tweet: NSObject {
     retweetedStatus = dictionary["retweeted_status"] as? NSDictionary
     currentUserRetweet = dictionary["current_user_retweet"] as? NSDictionary
   
+//     ['in_reply_to_status_id_str']
+    
     }
 
   

@@ -95,7 +95,7 @@ class TwitterClient: BDBOAuth1SessionManager {
       print("name: \(user.name!)")
       print("screenname: \(user.screenname!)")
       print("profileurl: \(user.profileUrl!)")
-      print("description: \(user.tagline!)")
+      //print("description: \(user.tagline!)")
       
     }, failure: { (task: URLSessionDataTask?, error: Error) -> Void in
         failure(error)

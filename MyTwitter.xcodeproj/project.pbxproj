@@ -14,6 +14,13 @@
 		E5166F101E35D33E002F5E01 /* TwitterClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5166F0F1E35D33E002F5E01 /* TwitterClient.swift */; };
 		E5166F121E35EC8A002F5E01 /* TweetsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5166F111E35EC8A002F5E01 /* TweetsViewController.swift */; };
 		E51D4FEB1E4503EF00161CE4 /* InfiniteScrollActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51D4FEA1E4503EF00161CE4 /* InfiniteScrollActivityView.swift */; };
+		E5564F091E4EBE540043BBCD /* TweetDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5564F081E4EBE540043BBCD /* TweetDetailViewController.swift */; };
+		E5564F0D1E4EC0E70043BBCD /* DetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5564F0C1E4EC0E70043BBCD /* DetailCell.swift */; };
+		E5564F0F1E4EC8400043BBCD /* TweetTextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5564F0E1E4EC8400043BBCD /* TweetTextCell.swift */; };
+		E5564F111E4EDE760043BBCD /* RetweetFavCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5564F101E4EDE760043BBCD /* RetweetFavCell.swift */; };
+		E5564F131E4EE4300043BBCD /* ActionsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5564F121E4EE4300043BBCD /* ActionsCell.swift */; };
+		E5564F151E4EE8EC0043BBCD /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5564F141E4EE8EC0043BBCD /* ProfileViewController.swift */; };
+		E5564F171E4EF3450043BBCD /* ProfileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5564F161E4EF3450043BBCD /* ProfileCell.swift */; };
 		E5BE200F1E2E9ACD00B0FE28 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5BE200E1E2E9ACD00B0FE28 /* AppDelegate.swift */; };
 		E5BE20141E2E9ACD00B0FE28 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E5BE20121E2E9ACD00B0FE28 /* Main.storyboard */; };
 		E5BE20161E2E9ACD00B0FE28 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E5BE20151E2E9ACD00B0FE28 /* Assets.xcassets */; };
@@ -31,6 +38,13 @@
 		E5166F0F1E35D33E002F5E01 /* TwitterClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TwitterClient.swift; sourceTree = "<group>"; };
 		E5166F111E35EC8A002F5E01 /* TweetsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweetsViewController.swift; sourceTree = "<group>"; };
 		E51D4FEA1E4503EF00161CE4 /* InfiniteScrollActivityView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfiniteScrollActivityView.swift; sourceTree = "<group>"; };
+		E5564F081E4EBE540043BBCD /* TweetDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweetDetailViewController.swift; sourceTree = "<group>"; };
+		E5564F0C1E4EC0E70043BBCD /* DetailCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailCell.swift; sourceTree = "<group>"; };
+		E5564F0E1E4EC8400043BBCD /* TweetTextCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweetTextCell.swift; sourceTree = "<group>"; };
+		E5564F101E4EDE760043BBCD /* RetweetFavCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RetweetFavCell.swift; sourceTree = "<group>"; };
+		E5564F121E4EE4300043BBCD /* ActionsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionsCell.swift; sourceTree = "<group>"; };
+		E5564F141E4EE8EC0043BBCD /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		E5564F161E4EF3450043BBCD /* ProfileCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileCell.swift; sourceTree = "<group>"; };
 		E5BE200B1E2E9ACD00B0FE28 /* MyTwitter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyTwitter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5BE200E1E2E9ACD00B0FE28 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E5BE20131E2E9ACD00B0FE28 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -81,6 +95,12 @@
 		E5564F051E4EB84A0043BBCD /* Custom Cells */ = {
 			isa = PBXGroup;
 			children = (
+				E5063B071E370D34000612EE /* TweetCell.swift */,
+				E5564F0C1E4EC0E70043BBCD /* DetailCell.swift */,
+				E5564F0E1E4EC8400043BBCD /* TweetTextCell.swift */,
+				E5564F101E4EDE760043BBCD /* RetweetFavCell.swift */,
+				E5564F121E4EE4300043BBCD /* ActionsCell.swift */,
+				E5564F161E4EF3450043BBCD /* ProfileCell.swift */,
 			);
 			name = "Custom Cells";
 			sourceTree = "<group>";
@@ -109,7 +129,7 @@
 				E5564F051E4EB84A0043BBCD /* Custom Cells */,
 				E5166F0E1E35D325002F5E01 /* API */,
 				E5166F091E35C93D002F5E01 /* Models */,
-				E5BE20201E2E9C3800B0FE28 /* UI */,
+				E5BE20201E2E9C3800B0FE28 /* View Controllers */,
 				E5BE200E1E2E9ACD00B0FE28 /* AppDelegate.swift */,
 				E5BE20121E2E9ACD00B0FE28 /* Main.storyboard */,
 				E5BE20151E2E9ACD00B0FE28 /* Assets.xcassets */,
@@ -119,15 +139,16 @@
 			path = MyTwitter;
 			sourceTree = "<group>";
 		};
-		E5BE20201E2E9C3800B0FE28 /* UI */ = {
+		E5BE20201E2E9C3800B0FE28 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
 				E5BE20211E2E9C4700B0FE28 /* LoginViewController.swift */,
 				E5166F111E35EC8A002F5E01 /* TweetsViewController.swift */,
-				E5063B071E370D34000612EE /* TweetCell.swift */,
 				E51D4FEA1E4503EF00161CE4 /* InfiniteScrollActivityView.swift */,
+				E5564F081E4EBE540043BBCD /* TweetDetailViewController.swift */,
+				E5564F141E4EE8EC0043BBCD /* ProfileViewController.swift */,
 			);
-			name = UI;
+			name = "View Controllers";
 			sourceTree = "<group>";
 		};
 		FCEAAE35C760F5A00783DF24 /* Frameworks */ = {
@@ -261,9 +282,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E5564F111E4EDE760043BBCD /* RetweetFavCell.swift in Sources */,
+				E5564F0D1E4EC0E70043BBCD /* DetailCell.swift in Sources */,
 				E51D4FEB1E4503EF00161CE4 /* InfiniteScrollActivityView.swift in Sources */,
 				E5166F0B1E35C973002F5E01 /* User.swift in Sources */,
+				E5564F151E4EE8EC0043BBCD /* ProfileViewController.swift in Sources */,
+				E5564F131E4EE4300043BBCD /* ActionsCell.swift in Sources */,
+				E5564F091E4EBE540043BBCD /* TweetDetailViewController.swift in Sources */,
+				E5564F0F1E4EC8400043BBCD /* TweetTextCell.swift in Sources */,
 				E5063B081E370D34000612EE /* TweetCell.swift in Sources */,
+				E5564F171E4EF3450043BBCD /* ProfileCell.swift in Sources */,
 				E5166F0D1E35C98C002F5E01 /* Tweet.swift in Sources */,
 				E5BE20221E2E9C4700B0FE28 /* LoginViewController.swift in Sources */,
 				E5166F121E35EC8A002F5E01 /* TweetsViewController.swift in Sources */,
