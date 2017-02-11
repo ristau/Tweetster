@@ -9,10 +9,6 @@
 import UIKit
 import AFNetworking
 
-protocol TweetCellDelegator {
-  func callSegueFromCell(myData dataobject: User)
-}
-
 class TweetCell: UITableViewCell {
   
   @IBOutlet weak var tweetTextLabel: UILabel!
@@ -28,6 +24,8 @@ class TweetCell: UITableViewCell {
   @IBOutlet weak var replyButton: UIButton!
   @IBOutlet weak var saveButton: UIButton!
   @IBOutlet weak var retweetButton: UIButton!
+  
+  var tapGesture = UITapGestureRecognizer()
   
   var favStatus: Bool?
   var favCount: Int?
@@ -48,6 +46,7 @@ class TweetCell: UITableViewCell {
       
       if let profileUrl = tweet.user?.profileUrl {
         profileImage.setImageWith(profileUrl)
+        profileImage.addGestureRecognizer(tapGesture)
       }
       
       if let date = tweet?.timestamp {
@@ -76,6 +75,7 @@ class TweetCell: UITableViewCell {
       
       favStatus = tweet.favorited!
       retweetStatus = tweet.retweeted!
+    
   
     }
   }
@@ -86,6 +86,7 @@ class TweetCell: UITableViewCell {
       
       profileImage.layer.cornerRadius = 3
       profileImage.clipsToBounds = true
+      tapGesture = UITapGestureRecognizer(target: self, action: #selector(goToProfile))
       
     }
 
@@ -259,8 +260,18 @@ class TweetCell: UITableViewCell {
       self.retweetButton.setImage(#imageLiteral(resourceName: "retweet_standard24"), for: .normal)
       
     }
+  }
+  
+  func goToProfile() {
     
-
+    print("Going to profile view")
+    let navVC = UINavigationController()
+    let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+    let profileVC = storyboard.instantiateViewController(withIdentifier: "ProfileView") as! ProfileViewController
+    let userToSend = tweet?.user
+    profileVC.user = userToSend
+    print("User: \(profileVC.user.name!)")
+    navVC.pushViewController(profileVC, animated: true)
     
   }
   

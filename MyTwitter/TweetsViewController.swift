@@ -60,6 +60,8 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
         tableView.delegate = self
         tableView.estimatedRowHeight = 100
         tableView.rowHeight = UITableViewAutomaticDimension
+      
+  
 
     
         makeNetworkCall()
@@ -77,12 +79,14 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     
     let cell = tableView.dequeueReusableCell(withIdentifier: "TweetCell", for: indexPath) as! TweetCell
+   //  cell.delegate = self
 
     //cell.backgroundColor = UIColor(red:0.92, green:0.98, blue:0.99, alpha:1.0) // hex# ebfbfd // color for retweet and save
     cell.selectionStyle = .none
     
     if let tweet = tweets?[indexPath.row] {
       cell.tweet = tweet
+
     }
     
     return cell
@@ -241,9 +245,17 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
   
   
   
+  @IBAction func composeTweet(_ sender: UIBarButtonItem) {
+    print("Going to compose tweet") 
+  }
   
     // MARK: - Navigation
-
+  
+  
+ // func callSegueFromCell(myData dataobject: User) {
+    
+ 
+ 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
     
       if segue.identifier == "Detail" {
@@ -255,8 +267,6 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
         detailVC.replies = tweets // update this for replies 
         
       }
-  
-  
      }
   
   }

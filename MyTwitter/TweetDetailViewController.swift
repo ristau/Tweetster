@@ -106,6 +106,10 @@ class TweetDetailViewController: UIViewController, UITableViewDataSource, UITabl
     
   }
   
+  @IBAction func composeTweet(_ sender: UIBarButtonItem) {
+    print("Going to compose tweet") 
+  }
+  
 
 
 
