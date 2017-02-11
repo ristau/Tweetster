@@ -13,9 +13,13 @@ class User: NSObject {
   var name: String?
   var screenname: String?
   var profileUrl: URL?
-  //var tagline: String?
+  var tagline: String?
   var followersCount: Int?
   var followingCount: Int?
+  var profileBannerUrl: URL?
+  var location: String?
+  var favoriteCount: Int?
+  var tweetCount: Int?
   
   var dictionary: NSDictionary?
   
@@ -25,17 +29,21 @@ class User: NSObject {
     
     name = dictionary["name"] as? String
     screenname = dictionary["screen_name"] as? String
+    favoriteCount = dictionary["favourites_count"] as? Int
+    tweetCount = dictionary["statuses_count"] as? Int
     
     if let profileUrlString = dictionary["profile_image_url_https"] as? String {
       profileUrl = URL(string: profileUrlString)
     }
     
- //   tagline = dictionary["description"] as? String
-    //followersCount = dictionary["followers_count"] as? Int
-    //followingCount = dictionary["friends_count"] as? Int
+    if let profileBannerUrlString = dictionary["profile_banner_url"] as? String{
+      profileBannerUrl = URL(string: profileBannerUrlString)
+    }
     
-    followersCount = 10
-    followingCount = 20
+    location = dictionary["location"] as? String
+    tagline = dictionary["description"] as? String
+    followersCount = dictionary["followers_count"] as? Int
+    followingCount = dictionary["friends_count"] as? Int
     
   }
   
@@ -46,21 +54,21 @@ class User: NSObject {
   
   class var currentUser: User? {
     
-    get {
-      
-      if _currentUser == nil {
+      get {
         
-        let defaults = UserDefaults.standard
-        let userData = defaults.object(forKey: "currentUserData") as? Data
-        
-        if let userData = userData{
+        if _currentUser == nil{
+          let defaults = UserDefaults.standard
+          let userData = defaults.object(forKey: "currentUserData") as? Data
           
-          let dictionary = try! JSONSerialization.jsonObject(with: userData, options: .allowFragments)
-          _currentUser = User(dictionary: dictionary as! NSDictionary)
+          if let userData = userData{
+            print("I found data cached")
+            if let dictionary = try? JSONSerialization.jsonObject(with: userData, options: .allowFragments){
+              print("I deserialized the data")
+              _currentUser = User(dictionary: dictionary as! NSDictionary)
+            }
+          }
         }
-      }
-      
-      return _currentUser
+        return _currentUser
     }
 
     
