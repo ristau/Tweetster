@@ -65,7 +65,7 @@ Challenges encountered while building the app: Unretweeting still not functionin
 
 ##Project 5 - *Twitter Part 2*
 
-Time spent: **X** hours spent in total
+Time spent: **12** hours spent in total
 
 ## User Stories
 
