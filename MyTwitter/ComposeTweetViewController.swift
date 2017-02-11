@@ -16,104 +16,126 @@ class ComposeTweetViewController: UIViewController, UITextViewDelegate{
   
   
   var user: User!
-  var charCount: Int = 140
+  var originalCharLimit: Int = 140
+  var charLimit: Int!
+  var placeholderText = "What's Happening?"
+  var tweetContent: String = ""
+  var replyTweet: Tweet?
+  var author: String?
+  var isReply: Bool?
+  
 
-  
-  
     override func viewDidLoad() {
         super.viewDidLoad()
 
       print("Now in Compose Tweet")
       user = User.currentUser
       print("User Name: \(user.name!)")
-      
       tweetTextView.delegate = self
-
-     
+      isReply = false
     }
 
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(true)
-    
-    tweetTextView.text = "What's Happening?"
-    tweetTextView.textColor = UIColor.lightGray
+
+    applyPlaceholderStyle(tweetText: tweetTextView, phText: placeholderText)
     self.tweetTextView.becomeFirstResponder()
-    tweetTextView.selectedTextRange = tweetTextView.textRange(from: tweetTextView.beginningOfDocument, to: tweetTextView.beginningOfDocument)
+    charLimit = originalCharLimit
+    charCountLabel.text = String(describing: originalCharLimit)
     
   }
   
-  func textViewDidBeginEditing(_ textView: UITextView) {
-    if tweetTextView.textColor == UIColor.lightGray {
-      tweetTextView.textColor = nil
-      tweetTextView.textColor = UIColor.black
+ 
+  func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
+    if textView == tweetTextView && textView.text == placeholderText
+    {
+      moveCursorToStart(textView: textView)
+    }
+    return true
+  }
+  
+  func moveCursorToStart(textView: UITextView)
+  {
+    DispatchQueue.main.async {
+      textView.selectedRange = NSMakeRange(0,0)
     }
   }
   
   func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-    // Combine the textView text and the replacement text to
-    // create the updated text string
     
-    let currentText: NSString = (tweetTextView.text ?? "") as NSString
-    let updatedText = currentText.replacingCharacters(in: range, with: text)
-    //let currentText = tweetTextView.text
-    //let updatedText = (currentText! as String).replacingCharacters(in: range, with: text)
+    let newLength = textView.text.utf16.count + text.utf16.count - range.length
     
-    // If updated text view will be empty, add the placeholder
-    // and set the cursor to the beginning of the text view
-    if updatedText.isEmpty {
+    if newLength > 0 {
       
-      tweetTextView.text = "What's Happening?"
-      tweetTextView.textColor = UIColor.lightGray
+      if textView == tweetTextView && textView.text == placeholderText
+      {
+        if text.utf16.count == 0
+        {
+          return false
+        }
+        applyNonPlaceholderStyle(tweetText: textView)
+        textView.text = ""
+      }
       
-      tweetTextView.selectedTextRange = tweetTextView.textRange(from: tweetTextView.beginningOfDocument, to: tweetTextView.beginningOfDocument)
+      if newLength <= charLimit {
+        
+        charCountLabel.text = "\(charLimit - newLength)"
       
+        
+      }
+      
+      return newLength <= charLimit
+      
+    } else {
+      applyPlaceholderStyle(tweetText: textView, phText: placeholderText)
+      moveCursorToStart(textView: textView)
       return false
     }
-      
-      // Else if the text view's placeholder is showing and the
-      // length of the replacement string is greater than 0, clear
-      // the text view and set its color to black to prepare for
-      // the user's entry
-    else if tweetTextView.textColor == UIColor.lightGray && !text.isEmpty {
-      tweetTextView.text = nil
-      tweetTextView.textColor = UIColor.black
-    }
-    
-    return true
-  }
-  
-  func textViewDidChangeSelection(_ textView: UITextView) {
-    if self.view.window != nil {
-      if tweetTextView.textColor == UIColor.lightGray {
-        tweetTextView.selectedTextRange = tweetTextView.textRange(from: tweetTextView.beginningOfDocument, to: tweetTextView.beginningOfDocument)
-      }
-    }
   }
   
   
-  
-  
- /* func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-    
-    let characterLimit = 10
-    let newText = NSString(string: tweetTextView.text!).replacingCharacters(in: range, with: text)
-    let numberOfChars = newText.characters.count
-    
-    return numberOfChars < characterLimit
+  func applyPlaceholderStyle(tweetText: UITextView, phText: String) {
+    tweetText.textColor = UIColor.lightGray
+    tweetText.text = phText
   }
- */ 
-
+ 
+  func applyNonPlaceholderStyle(tweetText: UITextView) {
+    tweetText.textColor = UIColor.darkText
+    tweetText.alpha = 1.0
+  }
+  
   
   @IBAction func onCancel(_ sender: UIBarButtonItem) {
-    print("Pressed Cancel") 
+    print("Pressed Done, Exiting the View Controller")
+    dismiss(animated: true, completion: nil)
+    
   }
+  
+  @IBAction func onClear(_ sender: UIButton) {
+    print("Pressed Clear")
+    tweetTextView.text = ""
+    charLimit = originalCharLimit
+    charCountLabel.text = String(describing: charLimit!)
+  }
+  
+  
   
   
   @IBAction func submitTweet(_ sender: UIButton) {
- print("Pressed Submit Tweet")
-  
+    print("Pressed Submit Tweet")
+    tweetContent = tweetTextView.text
+    print("Tweet to Send: \(tweetContent)")
+    createTweet()
   }
+  
+  func createTweet(){
+
+    TwitterClient.sharedInstance.publishTweet(text: tweetContent) { newTweet in
+      print("Composing new tweet")
+    }
+  }
+  
   
     /*
     // MARK: - Navigation

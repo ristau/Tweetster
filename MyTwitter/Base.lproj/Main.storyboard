@@ -212,7 +212,7 @@
                         <barButtonItem key="rightBarButtonItem" image="composeBlack24" id="1LS-fA-UK1">
                             <connections>
                                 <action selector="composeTweet:" destination="HQo-r4-0OM" id="jq8-lU-pc2"/>
-                                <segue destination="jTN-ur-5nX" kind="show" identifier="Compose" id="fK4-Rd-UUF"/>
+                                <segue destination="yFd-uQ-DaH" kind="show" identifier="Compose" id="fK4-Rd-UUF"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -454,7 +454,7 @@
                         <barButtonItem key="rightBarButtonItem" image="composeBlack24" id="DD4-93-p8f">
                             <connections>
                                 <action selector="composeTweet:" destination="cEW-Or-ZYe" id="sBI-Ml-hdf"/>
-                                <segue destination="jTN-ur-5nX" kind="show" identifier="ComposeTweet" id="7ai-Ih-LWP"/>
+                                <segue destination="yFd-uQ-DaH" kind="show" identifier="ComposeTweet" id="7ai-Ih-LWP"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -484,7 +484,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="20"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences" autocorrectionType="yes" spellCheckingType="yes" keyboardType="twitter" returnKeyType="done"/>
                             </textView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H4g-Ps-Nhl">
                                 <rect key="frame" x="239" y="72" width="69" height="30"/>
@@ -500,17 +500,25 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="140" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F1r-s8-H5D">
-                                <rect key="frame" x="10" y="77" width="29" height="21"/>
+                                <rect key="frame" x="10" y="77" width="64" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Kf-EL-l4W">
+                                <rect key="frame" x="142" y="71" width="36" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Clear"/>
+                                <connections>
+                                    <action selector="onClear:" destination="jTN-ur-5nX" eventType="touchUpInside" id="Tma-VD-FPz"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="Compose Tweet" id="Ghv-DV-kmP">
-                        <barButtonItem key="rightBarButtonItem" systemItem="cancel" id="6X8-hE-LMf">
+                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="6X8-hE-LMf">
                             <connections>
                                 <action selector="onCancel:" destination="jTN-ur-5nX" id="Rg7-TR-Pjc"/>
                             </connections>
@@ -523,7 +531,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2gu-3X-bHv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2373.75" y="931.69014084507046"/>
+            <point key="canvasLocation" x="3371.25" y="931.69014084507046"/>
         </scene>
         <!--Profile View Controller-->
         <scene sceneID="yaV-nE-Pg7">
@@ -725,6 +733,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hMm-7S-jYK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1031" y="137"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="dpF-52-Eny">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="yFd-uQ-DaH" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="vbp-Y5-ULR">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="jTN-ur-5nX" kind="relationship" relationship="rootViewController" id="qbf-rp-ml8"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="IXM-GC-J8d" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2373.75" y="931.69014084507046"/>
         </scene>
     </scenes>
     <resources>
