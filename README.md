@@ -17,15 +17,16 @@ The following **required** functionality is completed:
 The following **optional** features are implemented:
 
 - [/] User can load more tweets once they reach the bottom of the feed using infinite loading similar to the actual Twitter client.
-- [/] User should be able to unretweet and unfavorite and should decrement the retweet and favorite count.
-- [/] User can pull to refresh.
+- [X] User should be able to unfavorite and should decrement favorite count.
+- [/] User should be able to unretweet should decrement the retweet count - in progress
+- [/] User can pull to refresh. - in progress
 
 Partially implemented all the optionals. Can favorite and unfavorite, with incrementing and decrementing the correct fav count.
 Pull to refresh and infinite loading are implemented, but create limit blocks.  
 
 The following **additional** features are implemented:
 
-- [X] Implemended section header that displays date and time of tweet
+- [X] Implemended section header that displays date and time of tweet (removed in Week 2) 
 
 Please list two areas of the assignment you'd like to **discuss further with your peers** during the next class (examples include better ways to implement something, how to extend your app in certain ways, etc):
 
@@ -75,12 +76,12 @@ The following **required** functionality is completed:
    - [X] Contains the user header view
    - [X] Contains a section with the users basic stats: # tweets, # following, # followers
 - [/] Home Timeline: Tapping on a user image should bring up that user's profile page
-- [/] Compose Page: User can compose a new tweet by tapping on a compose button.
+- [X] Compose Page: User can compose a new tweet by tapping on a compose button.
 Profile view segue is correctly called from hometimeline, but VC does not appear. 
 
 The following **optional** features are implemented:
 
-- [ ] When composing, you should have a countdown in the upper right for the tweet limit.
+- [X] When composing, you should have a countdown in the upper right for the tweet limit.
 - [ ] After creating a new tweet, a user should be able to view it in the timeline immediately without refetching the timeline from the network.
 - [ ] Profile Page
    - [ ] Implement the paging view for the user description.
