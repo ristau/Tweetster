@@ -16,9 +16,12 @@ The following **required** functionality is completed:
 
 The following **optional** features are implemented:
 
-- [ ] User can load more tweets once they reach the bottom of the feed using infinite loading similar to the actual Twitter client.
-- [ ] User should be able to unretweet and unfavorite and should decrement the retweet and favorite count.
-- [ ] User can pull to refresh.
+- [/] User can load more tweets once they reach the bottom of the feed using infinite loading similar to the actual Twitter client.
+- [/] User should be able to unretweet and unfavorite and should decrement the retweet and favorite count.
+- [/] User can pull to refresh.
+
+Partially implemented all the optionals. Can favorite and unfavorite, with incrementing and decrementing the correct fav count.
+Pull to refresh and infinite loading are implemented, but create limit blocks.  
 
 The following **additional** features are implemented:
 
@@ -67,12 +70,13 @@ Time spent: **X** hours spent in total
 
 The following **required** functionality is completed:
 
-- [ ] Tweet Details Page: User can tap on a tweet to view it, with controls to retweet, favorite, and reply.
-- [ ] Profile page:
-   - [ ] Contains the user header view
-   - [ ] Contains a section with the users basic stats: # tweets, # following, # followers
-- [ ] Home Timeline: Tapping on a user image should bring up that user's profile page
-- [ ] Compose Page: User can compose a new tweet by tapping on a compose button.
+- [X] Tweet Details Page: User can tap on a tweet to view it, with controls to retweet, favorite, and reply.
+- [X] Profile page:
+   - [X] Contains the user header view
+   - [X] Contains a section with the users basic stats: # tweets, # following, # followers
+- [/] Home Timeline: Tapping on a user image should bring up that user's profile page
+- [/] Compose Page: User can compose a new tweet by tapping on a compose button.
+Profile view segue is correctly called from hometimeline, but VC does not appear. 
 
 The following **optional** features are implemented:
 
