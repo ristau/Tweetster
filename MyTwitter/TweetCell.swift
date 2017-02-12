@@ -193,9 +193,7 @@ class TweetCell: UITableViewCell {
     }
   
   func performUnRetweet() {
-    
-    
-    
+
     TwitterClient.sharedInstance.unRetweet(params: ["id": retweetID], success: { (tweet) -> () in
       
       if let retweetedStatus = tweet?.retweetedStatus {

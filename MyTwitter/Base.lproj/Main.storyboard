@@ -21,10 +21,13 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eSP-aZ-X02">
-                                <rect key="frame" x="89" y="318" width="217" height="82"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eSP-aZ-X02">
+                                <rect key="frame" x="85" y="259" width="150" height="50"/>
                                 <color key="backgroundColor" red="0.40000000600000002" green="0.80000001190000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="YPn-4j-Ljw"/>
+                                    <constraint firstAttribute="width" constant="150" id="uDM-Yf-DcV"/>
+                                </constraints>
                                 <state key="normal" title="Login with Twitter">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -34,6 +37,10 @@
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="eSP-aZ-X02" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="X9Z-1E-lBy"/>
+                            <constraint firstItem="eSP-aZ-X02" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="jYG-ge-e58"/>
+                        </constraints>
                     </view>
                     <connections>
                         <segue destination="WkD-Hj-sEb" kind="presentation" identifier="loginSegue" id="Lwl-3k-13Q"/>
@@ -430,6 +437,10 @@
                                                 <constraint firstItem="nTd-cZ-Gyj" firstAttribute="centerY" secondItem="a82-X2-7Ne" secondAttribute="centerY" id="LRU-kJ-BrV"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="favButton" destination="qtQ-um-nZx" id="JPK-3F-IMA"/>
+                                            <outlet property="retweetButton" destination="46q-Ta-huz" id="Iwe-LV-qaL"/>
+                                        </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="emG-To-haY">
                                         <rect key="frame" x="0.0" y="310" width="320" height="44"/>
@@ -761,6 +772,6 @@
         <image name="retweeted24" width="24" height="24"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="fK4-Rd-UUF"/>
+        <segue reference="7ai-Ih-LWP"/>
     </inferredMetricsTieBreakers>
 </document>

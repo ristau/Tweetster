@@ -17,6 +17,7 @@ class RetweetFavCell: UITableViewCell {
   var rtCount: Int!
   var favCount: Int!
   var originalTweetID: String?
+  var favStatus: Bool!
   
   var tweet: Tweet! {
     
@@ -36,10 +37,8 @@ class RetweetFavCell: UITableViewCell {
       
       retweetCountLabel.text = String(describing: rtCount!)
       favCountLabel.text = String(describing: favCount!)
+      favStatus = tweet.favorited!
 
-      
-      
-      
     }
     
   }
@@ -58,6 +57,7 @@ class RetweetFavCell: UITableViewCell {
 
   @IBAction func favCountButton(_ sender: UIButton) {
     print("Pressed on Likes")
+    
   }
   
   
