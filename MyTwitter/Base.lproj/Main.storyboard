@@ -81,26 +81,26 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tweet Text " textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" enabled="NO" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SZQ-Sa-Jat">
-                                                    <rect key="frame" x="95" y="29.5" width="220" height="14.5"/>
+                                                    <rect key="frame" x="95" y="27" width="220" height="14.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sbS-B4-5qY">
-                                                    <rect key="frame" x="292" y="12" width="23" height="12"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                                    <rect key="frame" x="296.5" y="12" width="18.5" height="10"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="8"/>
                                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Author" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dpM-BX-hdy">
-                                                    <rect key="frame" x="95" y="10" width="40.5" height="14.5"/>
-                                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="12"/>
+                                                    <rect key="frame" x="95" y="10" width="34.5" height="12"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="10"/>
                                                     <color key="textColor" red="0.12156862745098039" green="0.51372549019607838" blue="0.58823529411764708" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Screenname" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fbg-Bc-Qpn">
-                                                    <rect key="frame" x="140.5" y="12" width="62.5" height="12"/>
-                                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="10"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" misplaced="YES" text="Screenname" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fbg-Bc-Qpn">
+                                                    <rect key="frame" x="140.5" y="11.5" width="51" height="10"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="8"/>
                                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -170,6 +170,7 @@
                                                 <constraint firstItem="vea-WM-6W0" firstAttribute="top" relation="greaterThanOrEqual" secondItem="SZQ-Sa-Jat" secondAttribute="bottom" constant="10" id="Bfc-i1-bTQ"/>
                                                 <constraint firstAttribute="trailing" secondItem="SZQ-Sa-Jat" secondAttribute="trailing" constant="5" id="DlC-gQ-wh6"/>
                                                 <constraint firstItem="YNq-e7-cUk" firstAttribute="leading" secondItem="WVZ-yq-NtT" secondAttribute="leading" constant="10" id="G8G-hc-5M5"/>
+                                                <constraint firstItem="sbS-B4-5qY" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Fbg-Bc-Qpn" secondAttribute="trailing" constant="5" id="Hlv-nZ-nsl"/>
                                                 <constraint firstItem="SZQ-Sa-Jat" firstAttribute="top" secondItem="dpM-BX-hdy" secondAttribute="bottom" constant="5" id="ILo-Ys-JIy"/>
                                                 <constraint firstItem="Fbg-Bc-Qpn" firstAttribute="baseline" secondItem="dpM-BX-hdy" secondAttribute="baseline" id="KaG-9D-bQ2"/>
                                                 <constraint firstAttribute="bottom" secondItem="vea-WM-6W0" secondAttribute="bottom" constant="10" id="OZV-Ns-O6j"/>
@@ -772,6 +773,6 @@
         <image name="retweeted24" width="24" height="24"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="7ai-Ih-LWP"/>
+        <segue reference="fK4-Rd-UUF"/>
     </inferredMetricsTieBreakers>
 </document>
