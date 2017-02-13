@@ -113,15 +113,22 @@ class TweetDetailViewController: UIViewController, UITableViewDataSource, UITabl
     print("Going to compose tweet") 
   }
   
-
-    /*
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+      
+      if segue.identifier == "ReplyTweet"{
+        
+        print("About to Reply to the Tweet")
+        
+        let replyNavVC = segue.destination as? UINavigationController
+        let replyVC = replyNavVC?.viewControllers.first as! ComposeTweetViewController
+        replyVC.replyTweet = tweet
+        replyVC.isReply = true
+        
+      }
     }
-    */
+  
 
 }

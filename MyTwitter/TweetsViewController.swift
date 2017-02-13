@@ -82,16 +82,16 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     
     let cell = tableView.dequeueReusableCell(withIdentifier: "TweetCell", for: indexPath) as! TweetCell
+  
 
     //cell.backgroundColor = UIColor(red:0.92, green:0.98, blue:0.99, alpha:1.0) // hex# ebfbfd // color for retweet and save
-
 
     cell.selectionStyle = .none
     
     if let tweet = tweets?[indexPath.row] {
       cell.tweet = tweet
       cell.profileButton.tag = indexPath.row
- 
+      cell.replyButton.tag = indexPath.row
     }
     
     cell.contentView.setNeedsLayout()
@@ -310,6 +310,23 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
         let profileVC = segue.destination as! ProfileViewController
         profileVC.user = userToSend
         
+      }
+      
+      //ReplyFromTableView
+      
+      if segue.identifier == "ReplyFromTableView" {
+        
+        print("Replying to the Tweet from the TableView")
+        
+        let button = sender as! UIButton
+        let index = button.tag
+        let tweet = tweets?[index]
+        
+        let replyNavVC = segue.destination as? UINavigationController
+        let replyVC = replyNavVC?.viewControllers.first as! ComposeTweetViewController
+        replyVC.replyTweet = tweet
+        replyVC.isReply = true
+
       }
       
       

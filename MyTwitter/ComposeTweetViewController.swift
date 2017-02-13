@@ -23,7 +23,8 @@ class ComposeTweetViewController: UIViewController, UITextViewDelegate{
   var replyTweet: Tweet?
   var author: String?
   var isReply: Bool?
-  
+  var replyID: NSNumber?
+  var screenName: String?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,14 +33,25 @@ class ComposeTweetViewController: UIViewController, UITextViewDelegate{
       user = User.currentUser
       print("User Name: \(user.name!)")
       tweetTextView.delegate = self
-      isReply = false
+      
+      if replyTweet != nil {
+        replyID = replyTweet?.id
+        screenName = "@" + (replyTweet?.user?.screenname)! + " "
+      }
+      
     }
 
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(true)
 
-    applyPlaceholderStyle(tweetText: tweetTextView, phText: placeholderText)
+    if replyTweet != nil {
+      tweetTextView.text = tweetTextView.text.appending(screenName!)
+    }
+    else {
+      applyPlaceholderStyle(tweetText: tweetTextView, phText: placeholderText)
+    }
+    
     self.tweetTextView.becomeFirstResponder()
     charLimit = originalCharLimit
     charCountLabel.text = String(describing: originalCharLimit)
@@ -131,8 +143,17 @@ class ComposeTweetViewController: UIViewController, UITextViewDelegate{
   
   func createTweet(){
 
+    if isReply! {
+    
+      TwitterClient.sharedInstance.replyTweet(text: tweetContent, replyToTweetID: replyID) { newTweet in
+        print("Replying to the tweet")
+      }
+      
+    }
+    else {
     TwitterClient.sharedInstance.publishTweet(text: tweetContent) { newTweet in
       print("Composing new tweet")
+      }
     }
   }
   

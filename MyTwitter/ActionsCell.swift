@@ -65,6 +65,9 @@ class ActionsCell: UITableViewCell {
     }
   
   
+  // MARK: - SAVE AS FAVORITE
+  
+  
   @IBAction func onFavorite(_ sender: UIButton) {
     print("pressed on Favorite")
     if favStatus == false {
@@ -109,6 +112,8 @@ class ActionsCell: UITableViewCell {
       })
     }
   }
+  
+  // MARK: -  RETWEET
   
   @IBAction func onRetweet(_ sender: UIButton) {
     print("pressed on retweet")
@@ -178,6 +183,8 @@ func getRetweetIdStr() {
 }
  
 
+  
+// MARK: - REPLY
 
   @IBAction func onReply(_ sender: UIButton) {
     print("pressed on reply")

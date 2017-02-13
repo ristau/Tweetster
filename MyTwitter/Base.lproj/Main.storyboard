@@ -121,6 +121,9 @@
                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zUm-De-N0U">
                                                                     <rect key="frame" x="0.0" y="0.0" width="24" height="24"/>
                                                                     <state key="normal" image="retweeted24"/>
+                                                                    <connections>
+                                                                        <segue destination="yFd-uQ-DaH" kind="show" identifier="ReplyFromTableView" id="zF4-IH-ZFm"/>
+                                                                    </connections>
                                                                 </button>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="RP#" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="j69-cc-aoA">
                                                                     <rect key="frame" x="29" y="0.0" width="20" height="24"/>
@@ -204,7 +207,6 @@
                                             <outlet property="retweetCountLabel" destination="w3V-sp-c1J" id="lSe-5s-YK0"/>
                                             <outlet property="saveButton" destination="eae-vv-qg8" id="DkX-aa-M8y"/>
                                             <outlet property="screenNameLabel" destination="Fbg-Bc-Qpn" id="5qc-eJ-DCx"/>
-                                            <outlet property="textLabel" destination="SZQ-Sa-Jat" id="4KY-LF-Ic4"/>
                                             <outlet property="tweetTextLabel" destination="SZQ-Sa-Jat" id="79T-1g-hvA"/>
                                             <segue destination="cEW-Or-ZYe" kind="show" identifier="Detail" id="YzZ-18-h69"/>
                                         </connections>
@@ -412,13 +414,14 @@
                                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="75" translatesAutoresizingMaskIntoConstraints="NO" id="nTd-cZ-Gyj">
                                                     <rect key="frame" x="49" y="10" width="222" height="24"/>
                                                     <subviews>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hSC-uf-emw">
+                                                        <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hSC-uf-emw">
                                                             <rect key="frame" x="0.0" y="0.0" width="24" height="24"/>
                                                             <state key="normal" image="reply24">
                                                                 <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                             </state>
                                                             <connections>
                                                                 <action selector="onReply:" destination="wiC-ZE-V0J" eventType="touchUpInside" id="b25-ED-rQT"/>
+                                                                <segue destination="yFd-uQ-DaH" kind="show" identifier="ReplyTweet" id="faf-dg-BAR"/>
                                                             </connections>
                                                         </button>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="46q-Ta-huz">
@@ -485,7 +488,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tRv-2O-PQs" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2835" y="111.97183098591549"/>
+            <point key="canvasLocation" x="3195" y="64"/>
         </scene>
         <!--Compose Tweet-->
         <scene sceneID="zgd-UO-CtK">
@@ -552,7 +555,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2gu-3X-bHv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3371.25" y="931.69014084507046"/>
+            <point key="canvasLocation" x="3251" y="932"/>
         </scene>
         <!--Profile View Controller-->
         <scene sceneID="yaV-nE-Pg7">
@@ -758,7 +761,7 @@
         <!--Navigation Controller-->
         <scene sceneID="dpF-52-Eny">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="yFd-uQ-DaH" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="ComposeTweetNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="yFd-uQ-DaH" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="vbp-Y5-ULR">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -771,7 +774,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IXM-GC-J8d" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2373.75" y="931.69014084507046"/>
+            <point key="canvasLocation" x="2336" y="989"/>
         </scene>
     </scenes>
     <resources>
@@ -782,6 +785,6 @@
         <image name="retweeted24" width="24" height="24"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="fK4-Rd-UUF"/>
+        <segue reference="faf-dg-BAR"/>
     </inferredMetricsTieBreakers>
 </document>

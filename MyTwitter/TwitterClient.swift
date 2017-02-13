@@ -205,14 +205,14 @@ class TwitterClient: BDBOAuth1SessionManager {
     })
   }
   
-  func replyTweet(text: String, replyToTweetID: NSNumber? = 0, success: @escaping (Tweet) -> ()) {
+  func replyTweet(text: String, replyToTweetID: NSNumber?, success: @escaping (Tweet) -> ()) {
  
     guard text.characters.count > 0 else {
       return
     }
     
     let params = ["status": text, "in_reply_to_status_id": Int(replyToTweetID!)] as [String : Any]
-    post("1.1/statuses/update.json", parameters: params, success: { (operation: URLSessionDataTask, response: Any?) -> Void in
+    post("1.1/statuses/update.json", parameters: params, progress: nil, success: { (task:  URLSessionDataTask, response: Any) -> Void in
       let tweet = Tweet(dictionary: response as! NSDictionary)
       success(tweet)
     })

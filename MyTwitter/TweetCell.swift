@@ -46,7 +46,6 @@ class TweetCell: UITableViewCell {
       
       if let profileUrl = tweet.user?.profileUrl {
         profileImage.setImageWith(profileUrl)
-        profileImage.addGestureRecognizer(tapGesture)
       }
       
       if let date = tweet?.timestamp {
@@ -232,6 +231,11 @@ class TweetCell: UITableViewCell {
   //    let full_tweet = get("https://api.twitter.com/1/1/statuses/show/" + originalTweetID + "json?include_my_retweet=1")
   //   let retweet_id = full_tweet.current_user_retweet.id_str
 
+  
+  // MARK: - REPLY TO TWEET 
+  
+ 
+  
   
   
   
