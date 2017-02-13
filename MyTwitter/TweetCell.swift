@@ -24,8 +24,8 @@ class TweetCell: UITableViewCell {
   @IBOutlet weak var replyButton: UIButton!
   @IBOutlet weak var saveButton: UIButton!
   @IBOutlet weak var retweetButton: UIButton!
+  @IBOutlet weak var profileButton: UIButton!
   
-  var tapGesture = UITapGestureRecognizer()
   
   var favStatus: Bool?
   var favCount: Int?
@@ -86,9 +86,10 @@ class TweetCell: UITableViewCell {
       
       profileImage.layer.cornerRadius = 3
       profileImage.clipsToBounds = true
-      tapGesture = UITapGestureRecognizer(target: self, action: #selector(goToProfile))
       
     }
+  
+  
 
      override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
@@ -260,19 +261,7 @@ class TweetCell: UITableViewCell {
     }
   }
   
-  func goToProfile() {
-    
-    print("Going to profile view")
-    let navVC = UINavigationController()
-    let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
-    let profileVC = storyboard.instantiateViewController(withIdentifier: "ProfileView") as! ProfileViewController
-    let userToSend = tweet?.user
-    profileVC.user = userToSend
-    print("User: \(profileVC.user.name!)")
-    navVC.pushViewController(profileVC, animated: true)
-    
-  }
-  
+
   }
   
   

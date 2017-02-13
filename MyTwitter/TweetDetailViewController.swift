@@ -94,6 +94,9 @@ class TweetDetailViewController: UIViewController, UITableViewDataSource, UITabl
       let cell = tableView.dequeueReusableCell(withIdentifier: "ActionsCell", for: indexPath) as! ActionsCell
       cell.tweet = tweet 
     }
+    
+    cell.contentView.setNeedsLayout()
+    cell.contentView.layoutIfNeeded()
 
     return cell
   }
@@ -109,15 +112,6 @@ class TweetDetailViewController: UIViewController, UITableViewDataSource, UITabl
   @IBAction func composeTweet(_ sender: UIBarButtonItem) {
     print("Going to compose tweet") 
   }
-  
-
-
-
-  
-  
-  
-  
-  
   
 
     /*

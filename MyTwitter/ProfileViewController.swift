@@ -16,6 +16,8 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
 
     override func viewDidLoad() {
         super.viewDidLoad()
+      
+      print("In the profile view")
 
       tableView.dataSource = self
       tableView.delegate = self

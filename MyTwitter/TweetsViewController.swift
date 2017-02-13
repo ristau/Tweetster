@@ -60,14 +60,17 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
         tableView.delegate = self
         tableView.estimatedRowHeight = 100
         tableView.rowHeight = UITableViewAutomaticDimension
-      
-  
 
-    
         makeNetworkCall()
  
       
-        }
+  }
+  
+  override func viewDidAppear(_ animated: Bool) {
+    super.viewDidAppear(true)
+    self.tableView.reloadData()
+  }
+ 
 
   // MARK: - TableView Methods
   
@@ -79,15 +82,20 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     
     let cell = tableView.dequeueReusableCell(withIdentifier: "TweetCell", for: indexPath) as! TweetCell
-   //  cell.delegate = self
 
     //cell.backgroundColor = UIColor(red:0.92, green:0.98, blue:0.99, alpha:1.0) // hex# ebfbfd // color for retweet and save
+
+
     cell.selectionStyle = .none
     
     if let tweet = tweets?[indexPath.row] {
       cell.tweet = tweet
-
+      cell.profileButton.tag = indexPath.row
+ 
     }
+    
+    cell.contentView.setNeedsLayout()
+    cell.contentView.layoutIfNeeded()
     
     return cell
   }
@@ -243,6 +251,30 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
     })
   }
   
+ 
+  //func goToProfile(_ sender: Any, tweet: Tweet) {
+  func goToProfile(sender: UIButton) {
+    
+    print("Tapped on Button") 
+    print("Going to Profile View")
+    let index = sender.tag
+    let tweet = tweets?[index]
+    print("TWEET TO SEND IS: \(tweet!.text!)")
+    
+    let userToSend = tweet!.user
+    print("USER TO BE VIEWED IS: \(tweet!.user!.name!)")
+    let profileVC = self.storyboard?.instantiateViewController(withIdentifier: "ProfileView") as! ProfileViewController
+    profileVC.user = userToSend
+
+    self.performSegue(withIdentifier: "FromTableViewToProfileView", sender: self)
+    
+  }
+  
+  
+  @IBAction func onProfileTap(_ sender: Any) {
+    print("Tapped on profile")
+  }
+  
   
   
   @IBAction func composeTweet(_ sender: UIBarButtonItem) {
@@ -251,10 +283,6 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
   
     // MARK: - Navigation
   
-  
- // func callSegueFromCell(myData dataobject: User) {
-    
- 
  
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
     
@@ -267,6 +295,25 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
         detailVC.replies = tweets // update this for replies 
         
       }
+      
+      if segue.identifier == "FromTableViewToProfileView"{
+        
+        print("Going to Profile View")
+        let button = sender as! UIButton
+        let index = button.tag
+        let tweet = tweets?[index]
+        print("TWEET TO SEND IS: \(tweet!.text!)")
+        
+        let userToSend = tweet!.user
+        print("USER TO BE VIEWED IS: \(tweet!.user!.name!)")
+      
+        let profileVC = segue.destination as! ProfileViewController
+        profileVC.user = userToSend
+        
+      }
+      
+      
+
      }
   
   }

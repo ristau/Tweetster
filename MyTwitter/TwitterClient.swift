@@ -190,19 +190,8 @@ class TwitterClient: BDBOAuth1SessionManager {
   }
 
   
-  // MARK: COMPOSE TWEET 
+  // MARK: COMPOSE & REPLY TWEET
   
- /* func compose(_ escapedTweet: String, params: NSDictionary?, completion: @escaping (_ error: Error?) -> () ){
-    post("1.1/statuses/update.json?status=\(escapedTweet)", parameters: params, success: { (operation: URLSessionDataTask, response: Any?) -> Void in
-      print("tweeted: \(escapedTweet)")
-      completion(nil)
-    }, failure: { (operation: URLSessionDataTask?, error: Error!) -> Void in
-      print ("could not compose tweet")
-      completion(error)
-    }
-    )
-  }
-  */
   
   func publishTweet(text: String, success: @escaping (Tweet) -> ()) {
   
@@ -215,6 +204,21 @@ class TwitterClient: BDBOAuth1SessionManager {
       success(tweet)
     })
   }
+  
+  func replyTweet(text: String, replyToTweetID: NSNumber? = 0, success: @escaping (Tweet) -> ()) {
+ 
+    guard text.characters.count > 0 else {
+      return
+    }
+    
+    let params = ["status": text, "in_reply_to_status_id": Int(replyToTweetID!)] as [String : Any]
+    post("1.1/statuses/update.json", parameters: params, success: { (operation: URLSessionDataTask, response: Any?) -> Void in
+      let tweet = Tweet(dictionary: response as! NSDictionary)
+      success(tweet)
+    })
+  }
+  
+  
   
   
   // MARK: - LOGOUT
