@@ -2,7 +2,7 @@
 
 **MyTwitter** is a basic twitter app to read and compose tweets the Twitter API(https://apps.twitter.com/).
 
-Time spent: **19** hours spent in total
+Time spent: **20** hours spent in total
 
 ## User Stories
 
@@ -16,10 +16,9 @@ The following **required** functionality is completed:
 
 The following **optional** features are implemented:
 
-- [/] User can load more tweets once they reach the bottom of the feed using infinite loading similar to the actual Twitter client - in progress
-- [X] User should be able to unfavorite and should decrement favorite count.
-- [X] User should be able to unretweet should decrement the retweet count.
-- [/] User can pull to refresh. - in progress
+- [X] User can load more tweets once they reach the bottom of the feed using infinite loading similar to the actual Twitter client 
+- [X] User should be able to unretweet and unfavorite and should decrement the retweet and favorite count. 
+- [X] User can pull to refresh. 
 
 Partially implemented all the optionals. Can favorite and unfavorite, with incrementing and decrementing the correct fav count.
 Pull to refresh and infinite loading are implemented, but create limit blocks.  
@@ -30,8 +29,8 @@ The following **additional** features are implemented:
 
 Please list two areas of the assignment you'd like to **discuss further with your peers** during the next class (examples include better ways to implement something, how to extend your app in certain ways, etc):
 
-1. 
-2. 
+1. Favorite count requires getting the original tweetID, where as retweet does not require this.  
+2. Infinite scrolling and pull to refresh are based on the parameters "since_id" and "max_id" in the Twitter Client.  This seemed to work more smoothly compared to using an offset variable.  
 
 ## Video Walkthrough 
 
