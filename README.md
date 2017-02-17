@@ -2,7 +2,7 @@
 
 **MyTwitter** is a basic twitter app to read and compose tweets the Twitter API(https://apps.twitter.com/).
 
-Time spent: **18** hours spent in total
+Time spent: **19** hours spent in total
 
 ## User Stories
 
@@ -18,7 +18,7 @@ The following **optional** features are implemented:
 
 - [/] User can load more tweets once they reach the bottom of the feed using infinite loading similar to the actual Twitter client - in progress
 - [X] User should be able to unfavorite and should decrement favorite count.
-- [/] User should be able to unretweet should decrement the retweet count - in progress
+- [X] User should be able to unretweet should decrement the retweet count.
 - [/] User can pull to refresh. - in progress
 
 Partially implemented all the optionals. Can favorite and unfavorite, with incrementing and decrementing the correct fav count.
@@ -42,7 +42,7 @@ Here's a walkthrough of implemented user stories:
 GIF created with LiceCap (http://www.cockos.com/licecap/).
 
 ## Notes
-Challenges encountered while building the app: Unretweeting still not functioning properly
+Challenges encountered while building the app: Unretweeting as outlined in Step 2 the Codepath guides did not function properly (api call was not recognized when I passed "include_my_retweet" as true, however, I was able to properly perform an unretweet using the path for "unretweet" in the Twitter API.   
 
 
 ## License
@@ -96,7 +96,7 @@ The following **optional** features are implemented:
 The following **additional** features are implemented:
 
 - [ ] Added retweets and likes to the TweetDetails screen
-- [ ] Added reply button to the TweetCell in the TweetsViewController
+- [X] Added reply button to the TweetCell in the TweetsViewController
 
 
 Please list two areas of the assignment you'd like to **discuss further with your peers** during the next class (examples include better ways to implement something, how to extend your app in certain ways, etc):
