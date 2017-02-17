@@ -79,6 +79,42 @@ class TwitterClient: BDBOAuth1SessionManager {
        failure(error)
     })
   }
+
+  func loadMoreHomeTimeline(oldestTweetID: NSNumber, success: @escaping ([Tweet]) -> (), failure: @escaping (Error) -> ()) {
+    
+    // gets older tweets 
+    
+       let params = ["max_id": oldestTweetID] as [String : Any]
+    // getting the tweets
+     get("1.1/statuses/home_timeline.json", parameters: params, progress: nil, success: { (task:  URLSessionDataTask, response: Any) -> Void in
+      
+      let dictionaries = response as! [NSDictionary]
+      let newTweets = Tweet.tweetsWithArray(dictionaries: dictionaries)
+      success(newTweets)
+      
+    }, failure: { (task: URLSessionDataTask?, error: Error) -> Void in
+      failure(error)
+    })
+  }
+  
+  
+  func getMostRecentHomeTimeline(mostRecentTweetID: NSNumber, success: @escaping ([Tweet]) -> (), failure: @escaping (Error) -> ()) {
+    
+    // gets older tweets
+    
+    let params = ["since_id": mostRecentTweetID] as [String : Any]
+    // getting the tweets
+    get("1.1/statuses/home_timeline.json", parameters: params, progress: nil, success: { (task:  URLSessionDataTask, response: Any) -> Void in
+      
+      let dictionaries = response as! [NSDictionary]
+      let newTweets = Tweet.tweetsWithArray(dictionaries: dictionaries)
+      success(newTweets)
+      
+    }, failure: { (task: URLSessionDataTask?, error: Error) -> Void in
+      failure(error)
+    })
+  }
+  
   
   
 
@@ -159,9 +195,10 @@ class TwitterClient: BDBOAuth1SessionManager {
   func getRetweetID(tweetID: String, success: @escaping (_ tweet: Tweet?) -> (), failure: @escaping (Error) -> ()) {
     
 //    https://api.twitter.com/1.1/statuses/show.json
-    let params = ["id": tweetID, "include_my_retweet": 1] as [String : Any]
-    
+      let params = ["id": tweetID, "include_my_retweet": 1] as [String : Any]
+
     // getting the tweets
+    
     post("1.1/statuses/statuses/show.json", parameters: params, progress: nil, success: { (task:  URLSessionDataTask, response: Any) -> Void in
       
       let tweet = Tweet.tweetAsDictionary(response as! NSDictionary)

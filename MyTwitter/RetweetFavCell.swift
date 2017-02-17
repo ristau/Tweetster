@@ -23,7 +23,7 @@ class RetweetFavCell: UITableViewCell {
     
     didSet {
       
-      if let retweetedStatus = tweet.retweetedStatus {
+      if tweet.retweetedStatus != nil {
         let retweet = Tweet.tweetAsDictionary(tweet.retweetedStatus!)
         originalTweetID = retweet.idStr
         favCount = retweet.favoritesCount

@@ -19,7 +19,6 @@ class TweetCell: UITableViewCell {
   @IBOutlet weak var profileImage: UIImageView!
   @IBOutlet weak var dateTextLabel: UILabel!
   
-  @IBOutlet weak var replyCountLabel: UILabel!
   @IBOutlet weak var replyButton: UIButton!
   @IBOutlet weak var saveButton: UIButton!
   @IBOutlet weak var retweetButton: UIButton!
@@ -54,7 +53,7 @@ class TweetCell: UITableViewCell {
         dateTextLabel.text = formatter.string(from: date)
       }
       
-      if let retweetedStatus = tweet.retweetedStatus {
+      if tweet.retweetedStatus != nil {
         let retweet = Tweet.tweetAsDictionary(tweet.retweetedStatus!)
         originalTweetID = retweet.idStr
         favCount = retweet.favoritesCount
@@ -104,7 +103,7 @@ class TweetCell: UITableViewCell {
       
       TwitterClient.sharedInstance.createFav(params: ["id": tweet.idStr!], success: { (tweet) -> () in
         
-        if let retweetedStatus = tweet?.retweetedStatus {
+        if (tweet?.retweetedStatus) != nil {
           let retweet = Tweet.tweetAsDictionary((tweet?.retweetedStatus!)!)
           self.favCount = retweet.favoritesCount
         } else {
@@ -127,7 +126,7 @@ class TweetCell: UITableViewCell {
       
       TwitterClient.sharedInstance.unSaveAsFavorite(params: ["id": originalTweetID!], success: { (tweet) -> () in
      
-        if let retweetedStatus = tweet?.retweetedStatus {
+        if (tweet?.retweetedStatus) != nil {
           let retweet = Tweet.tweetAsDictionary((tweet?.retweetedStatus!)!)
           self.favCount = retweet.favoritesCount
         } else {
@@ -160,7 +159,7 @@ class TweetCell: UITableViewCell {
       
       TwitterClient.sharedInstance.retweet(params: ["id": originalTweetID!], success: { (tweet) -> () in
         
-        if let retweetedStatus = tweet?.retweetedStatus {
+        if (tweet?.retweetedStatus) != nil {
           let retweet = Tweet.tweetAsDictionary((tweet?.retweetedStatus!)!)
           self.rtCount = retweet.retweetCount
         } else {
@@ -202,26 +201,6 @@ class TweetCell: UITableViewCell {
     })
   }
   
-  func getRetweetIdStr() {
-    
-    print("now in get retweetID function")
-    
-    TwitterClient.sharedInstance.getRetweetID(tweetID: originalTweetID!, success: { (tweet) -> () in
-      
-      print("Got the tweet") 
-    
-      
-      
-    } , failure: { (error: Error) -> () in
-      print("Error: \(error.localizedDescription)")
-    })
-
-  }
-  
-  
-  //    let full_tweet = get("https://api.twitter.com/1/1/statuses/show/" + originalTweetID + "json?include_my_retweet=1")
-  //   let retweet_id = full_tweet.current_user_retweet.id_str
-
   
   // MARK: - REPLY TO TWEET 
   
@@ -252,14 +231,17 @@ class TweetCell: UITableViewCell {
     } else if tweet.retweeted == false {
       self.retweetCountLabel.textColor = UIColor.darkGray
       self.retweetButton.setImage(#imageLiteral(resourceName: "retweet_grey16"), for: .normal)
-      
     }
+    
+    self.replyButton.setImage(#imageLiteral(resourceName: "reply_grey16"), for: .normal)
+    self.replyButton.setImage(#imageLiteral(resourceName: "reply_blue"), for: .highlighted)
+    
   }
   
 
   }
-  
-  
-  
+
+
+
   
 

@@ -32,8 +32,6 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
 
   @IBOutlet weak var tableView: UITableView!
 
-
-  
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.title = "My Tweets"
@@ -134,27 +132,29 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
   
   func refreshControlAction(_ refreshControl: UIRefreshControl) {
     
-    let refreshURL = URL(string: "https://api.twitter.com/1.1/statuses/home_timeline.json")
-    var request = URLRequest(url: refreshURL!)
-    request.httpMethod = "get"
+    refreshData()
+    
+   // let refreshURL = URL(string: "https://api.twitter.com/1.1/statuses/home_timeline.json")
+   // var request = URLRequest(url: refreshURL!)
+   // request.httpMethod = "get"
     
     //let session = URLSession(configuration: .default, delegate: nil, delegateQueue: OperationQueue.main)
     //let task: URLSessionDataTask = session.dataTask(with: request) { (data: Data?, response: URLResponse?, error: Error?) in
 
-    let session = URLSession.shared
+  //  let session = URLSession.shared
     
-    session.dataTask(with: request) {data, response, Error in
+  //  session.dataTask(with: request) {data, response, Error in
       // update data
-      print("Refreshing the data")
+    //  print("Refreshing the data")
       
       // reload tableview
-      self.tableView.reloadData()
+    //  self.tableView.reloadData()
       
       // tell the refresh control to stop spinning
-      refreshControl.endRefreshing()
+    //  refreshControl.endRefreshing()
       
       
-      }.resume()
+     // }.resume()
   }
   
   // MARK: - Logout
@@ -171,30 +171,7 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
     // Getting the tweets via the API
     TwitterClient.sharedInstance.homeTimeline(success: { (tweets: [Tweet]) -> () in
       self.tweets = tweets
-      
-      for tweet in tweets {
-        print("tweet: \(tweet.text!)")
-        print("1. retweeted: \(tweet.retweeted!)")
-        print("2. favorited: \(tweet.favorited!)")
-        print("3. idStr: \(tweet.idStr!)")
-        print("4. id: \(tweet.id!)")
-        
-        if let retweetedStatus = tweet.retweetedStatus {
-          let retweet = Tweet.tweetAsDictionary(tweet.retweetedStatus!)
-          let originalID = retweet.idStr
-          print("5. Retweet: \(originalID!)")
-        } else {
-          print("5. not a retweet")
-        }
-        
-        if tweet.currentUserRetweet != nil {
-          print("6. currentUserRetweet:\(tweet.currentUserRetweet!)")
-        }
-        
-        print("7. Fav Count: \(tweet.favoritesCount!)")
-        
-        self.tableView.reloadData()
-      }
+      self.tableView.reloadData()
       
     }, failure: { (error: Error) -> () in
       print("Error: \(error.localizedDescription)")
@@ -202,21 +179,55 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
   }
   
   func loadMoreData() {
+    print("Now loading more data")
     
-    let loadMoreURL = URL(string: "https://api.twitter.com/1.1/statuses/home_timeline.json")
-    var request = URLRequest(url: loadMoreURL!)
-    request.httpMethod = "get"
+      let numTweets = tweets?.count
+      let lastTweet: Tweet = (tweets?[numTweets!-1])!
+      let maxID = lastTweet.id
     
-    let session = URLSession.shared
-    
-    session.dataTask(with: request) {data, response, Error in
-      print("Entered the completion handler")
+    TwitterClient.sharedInstance.loadMoreHomeTimeline(oldestTweetID: maxID!, success: (success: { (newTweets: [Tweet]) -> () in
       
+      self.tweets?.append(contentsOf: newTweets)
+      self.isMoreDataLoading = false
+      self.loadingMoreView!.stopAnimating()
       
-    }.resume()
+      for tweet in newTweets {
+        print("Older Tweet: \(tweet.text!)")
+      }
+      
+      self.tableView.reloadData()
+      
+    }), failure: { (error: Error) -> () in
+      print("Error: \(error.localizedDescription)")
+    })
   }
   
-// MARK: - SAVING & UNSAVING AS FAVORITE 
+  func refreshData() {
+    print("Now refreshing for more recent data")
+    
+    let mostRecentTweet = tweets?[0]
+    let sinceID = mostRecentTweet?.id
+    
+    TwitterClient.sharedInstance.getMostRecentHomeTimeline(mostRecentTweetID: sinceID!, success: (success: { (newTweets: [Tweet]) -> () in
+      
+      self.tweets?.insert(contentsOf: newTweets, at: 0)
+      
+      for tweet in newTweets {
+        print("Recent Tweet: \(tweet.text!)")
+      }
+      
+      self.tableView.reloadData()
+      self.refreshControl.endRefreshing()
+      
+    }), failure: { (error: Error) -> () in
+      print("Error: \(error.localizedDescription)")
+    })
+  }
+
+  
+  
+  
+// MARK: - SAVING & UNSAVING AS FAVORITE
   
  @IBAction func onSave(_ sender: UIButton!) {
 

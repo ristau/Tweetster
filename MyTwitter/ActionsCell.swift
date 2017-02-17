@@ -19,7 +19,6 @@ class ActionsCell: UITableViewCell {
   var favCount: Int!
   var retweetStatus: Bool!
   var rtCount: Int!
-  var retweetID: String?
   
   var tweet: Tweet! {
     
@@ -36,7 +35,7 @@ class ActionsCell: UITableViewCell {
       favStatus = tweet.favorited
       retweetStatus = tweet.retweeted
       
-      if let retweetedStatus = tweet.retweetedStatus {
+      if tweet.retweetedStatus != nil {
         let retweet = Tweet.tweetAsDictionary(tweet.retweetedStatus!)
         originalTweetID = retweet.idStr
         favCount = retweet.favoritesCount
@@ -74,7 +73,7 @@ class ActionsCell: UITableViewCell {
       
       TwitterClient.sharedInstance.createFav(params: ["id": tweet.idStr!], success: { (tweet) -> () in
         
-        if let retweetedStatus = tweet?.retweetedStatus {
+        if (tweet?.retweetedStatus) != nil {
           let retweet = Tweet.tweetAsDictionary((tweet?.retweetedStatus!)!)
           self.favCount = retweet.favoritesCount
         } else {
@@ -95,7 +94,7 @@ class ActionsCell: UITableViewCell {
       
       TwitterClient.sharedInstance.unSaveAsFavorite(params: ["id": originalTweetID!], success: { (tweet) -> () in
         
-        if let retweetedStatus = tweet?.retweetedStatus {
+        if (tweet?.retweetedStatus) != nil {
           let retweet = Tweet.tweetAsDictionary((tweet?.retweetedStatus!)!)
           self.favCount = retweet.favoritesCount
           
@@ -123,7 +122,7 @@ class ActionsCell: UITableViewCell {
       
       TwitterClient.sharedInstance.retweet(params: ["id": originalTweetID!], success: { (tweet) -> () in
         
-        if let retweetedStatus = tweet?.retweetedStatus {
+        if (tweet?.retweetedStatus) != nil {
           let retweet = Tweet.tweetAsDictionary((tweet?.retweetedStatus!)!)
           self.rtCount = retweet.retweetCount
         } else {
@@ -150,9 +149,9 @@ class ActionsCell: UITableViewCell {
 
 func performUnRetweet() {
   
-  TwitterClient.sharedInstance.unRetweet(params: ["id": retweetID], success: { (tweet) -> () in
+  TwitterClient.sharedInstance.unRetweet(params: ["id": originalTweetID!], success: { (tweet) -> () in
     
-    if let retweetedStatus = tweet?.retweetedStatus {
+    if (tweet?.retweetedStatus) != nil {
       let retweet = Tweet.tweetAsDictionary((tweet?.retweetedStatus!)!)
       self.rtCount = retweet.retweetCount
     } else {
