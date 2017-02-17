@@ -19,7 +19,6 @@ class TweetCell: UITableViewCell {
   @IBOutlet weak var profileImage: UIImageView!
   @IBOutlet weak var dateTextLabel: UILabel!
   
-  
   @IBOutlet weak var replyCountLabel: UILabel!
   @IBOutlet weak var replyButton: UIButton!
   @IBOutlet weak var saveButton: UIButton!
@@ -181,8 +180,6 @@ class TweetCell: UITableViewCell {
 
     } else if retweetStatus == true {
       
-      print("getting ready for unretweeting")
-
       performUnRetweet()
     }
 
@@ -190,7 +187,7 @@ class TweetCell: UITableViewCell {
   
   func performUnRetweet() {
 
-    TwitterClient.sharedInstance.unRetweet(params: ["id": originalTweetID], success: { (unretweeted) -> () in
+    TwitterClient.sharedInstance.unRetweet(params: ["id": originalTweetID!], success: { (unretweeted) -> () in
       
       self.retweetStatus = false
       self.rtCount = (unretweeted?.retweetCount)!-1
