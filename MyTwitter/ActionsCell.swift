@@ -25,7 +25,7 @@ class ActionsCell: UITableViewCell {
     
     didSet {
       
-      if let retweetedStatus = tweet.retweetedStatus {
+      if tweet.retweetedStatus != nil {
         let retweet = Tweet.tweetAsDictionary(tweet.retweetedStatus!)
         originalTweetID = retweet.idStr
         
@@ -172,7 +172,7 @@ func performUnRetweet() {
 
 func getRetweetIdStr() {
   
-  TwitterClient.sharedInstance.getRetweetID(params: ["id": originalTweetID!], success: { (tweet) -> () in
+  TwitterClient.sharedInstance.getRetweetID(tweetID: originalTweetID!, success: { (tweet) -> () in
     
     print("Got the tweet")
     

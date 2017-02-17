@@ -113,20 +113,21 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="vea-WM-6W0">
-                                                    <rect key="frame" x="95" y="91" width="215" height="24"/>
+                                                    <rect key="frame" x="95" y="93" width="215" height="22"/>
                                                     <subviews>
                                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Dcl-B1-OJF">
-                                                            <rect key="frame" x="0.0" y="0.0" width="49" height="24"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="41" height="22"/>
                                                             <subviews>
                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zUm-De-N0U">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="24" height="24"/>
-                                                                    <state key="normal" image="retweeted24"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="16" height="22"/>
+                                                                    <state key="normal" image="reply_grey16"/>
                                                                     <connections>
+                                                                        <action selector="onReply:" destination="4Of-0a-Jkg" eventType="touchUpInside" id="1t2-Dn-6am"/>
                                                                         <segue destination="yFd-uQ-DaH" kind="show" identifier="ReplyFromTableView" id="zF4-IH-ZFm"/>
                                                                     </connections>
                                                                 </button>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="RP#" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="j69-cc-aoA">
-                                                                    <rect key="frame" x="29" y="0.0" width="20" height="24"/>
+                                                                    <rect key="frame" x="21" y="0.0" width="20" height="22"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                                     <nil key="highlightedColor"/>
@@ -134,11 +135,11 @@
                                                             </subviews>
                                                         </stackView>
                                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="nwp-kw-oe5">
-                                                            <rect key="frame" x="81.5" y="0.0" width="49" height="24"/>
+                                                            <rect key="frame" x="85.5" y="0.0" width="41" height="22"/>
                                                             <subviews>
                                                                 <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="B0f-Uj-U5N">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="24" height="24"/>
-                                                                    <state key="normal" image="retweet_standard24">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="16" height="22"/>
+                                                                    <state key="normal" image="retweet_greyFill16">
                                                                         <color key="titleColor" red="0.1215686275" green="0.51372549020000002" blue="0.58823529409999997" alpha="1" colorSpace="calibratedRGB"/>
                                                                     </state>
                                                                     <connections>
@@ -146,7 +147,7 @@
                                                                     </connections>
                                                                 </button>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="RT#" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w3V-sp-c1J">
-                                                                    <rect key="frame" x="29" y="0.0" width="20" height="24"/>
+                                                                    <rect key="frame" x="21" y="0.0" width="20" height="22"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                                     <nil key="highlightedColor"/>
@@ -154,11 +155,11 @@
                                                             </subviews>
                                                         </stackView>
                                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Lvl-wx-A7w">
-                                                            <rect key="frame" x="163" y="0.0" width="52" height="24"/>
+                                                            <rect key="frame" x="171" y="0.0" width="44" height="22"/>
                                                             <subviews>
                                                                 <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eae-vv-qg8">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="24" height="24"/>
-                                                                    <state key="normal" image="addSave24">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="16" height="22"/>
+                                                                    <state key="normal" image="save_greyFill16">
                                                                         <color key="titleColor" red="0.1215686275" green="0.51372549020000002" blue="0.58823529409999997" alpha="1" colorSpace="calibratedRGB"/>
                                                                     </state>
                                                                     <connections>
@@ -166,7 +167,7 @@
                                                                     </connections>
                                                                 </button>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Fav#" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ni1-ai-lqL">
-                                                                    <rect key="frame" x="29" y="0.0" width="23" height="24"/>
+                                                                    <rect key="frame" x="21" y="0.0" width="23" height="22"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                                     <nil key="highlightedColor"/>
@@ -781,10 +782,12 @@
         <image name="addSave24" width="24" height="24"/>
         <image name="composeBlack24" width="24" height="24"/>
         <image name="reply24" width="24" height="24"/>
+        <image name="reply_grey16" width="16" height="16"/>
+        <image name="retweet_greyFill16" width="16" height="16"/>
         <image name="retweet_standard24" width="24" height="24"/>
-        <image name="retweeted24" width="24" height="24"/>
+        <image name="save_greyFill16" width="16" height="16"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="faf-dg-BAR"/>
+        <segue reference="zF4-IH-ZFm"/>
     </inferredMetricsTieBreakers>
 </document>

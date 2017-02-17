@@ -54,8 +54,6 @@ class TweetCell: UITableViewCell {
         formatter.dateStyle = .short
         dateTextLabel.text = formatter.string(from: date)
       }
-
-
       
       if let retweetedStatus = tweet.retweetedStatus {
         let retweet = Tweet.tweetAsDictionary(tweet.retweetedStatus!)
@@ -75,6 +73,7 @@ class TweetCell: UITableViewCell {
       favStatus = tweet.favorited!
       retweetStatus = tweet.retweeted!
     
+      setLabels()
   
     }
   }
@@ -118,7 +117,7 @@ class TweetCell: UITableViewCell {
         self.favStatus = true
         self.favoriteCountLabel.text = String(describing: self.favCount!)
         self.favoriteCountLabel.textColor = UIColor.red
-        self.saveButton.setImage(#imageLiteral(resourceName: "unsave_red24"), for: .normal)
+        self.saveButton.setImage(#imageLiteral(resourceName: "unsave_redFill16"), for: .normal)
         
       }, failure: { (error: Error) -> () in
         print("Could not successfully save tweet.  Error: \(error.localizedDescription)")
@@ -140,7 +139,7 @@ class TweetCell: UITableViewCell {
         self.favStatus = false
         self.favoriteCountLabel.text = String(self.favCount!)
         self.favoriteCountLabel.textColor = UIColor.darkGray
-        self.saveButton.setImage(#imageLiteral(resourceName: "addSave24"), for: .normal)
+        self.saveButton.setImage(#imageLiteral(resourceName: "save_greyFill16"), for: .normal)
         
       }, failure: { (error: Error) -> () in
         print("Error: \(error.localizedDescription)")
@@ -173,8 +172,8 @@ class TweetCell: UITableViewCell {
         
         self.retweetStatus = true
         self.retweetCountLabel.text = String(describing: self.rtCount!)
-        self.retweetCountLabel.textColor = UIColor.green
-        self.retweetButton.setImage(#imageLiteral(resourceName: "retweeted24"), for: .normal)
+        self.retweetCountLabel.textColor = UIColor(red:0.05, green:0.87, blue:0.11, alpha:1.0)
+        self.retweetButton.setImage(#imageLiteral(resourceName: "retweet_green16"), for: .normal)
         
       } , failure: { (error: Error) -> () in
         print("Error: \(error.localizedDescription)")
@@ -182,33 +181,24 @@ class TweetCell: UITableViewCell {
 
     } else if retweetStatus == true {
       
-    //    let full_tweet = get("https://api.twitter.com/1/1/statuses/show/" + originalTweetID + "json?include_my_retweet=1")
-      //   let retweet_id = full_tweet.current_user_retweet.id_str
-      
       print("getting ready for unretweeting")
-      getRetweetIdStr()
-      
+
+      performUnRetweet()
     }
 
     }
   
   func performUnRetweet() {
 
-    TwitterClient.sharedInstance.unRetweet(params: ["id": retweetID], success: { (tweet) -> () in
-      
-      if let retweetedStatus = tweet?.retweetedStatus {
-        let retweet = Tweet.tweetAsDictionary((tweet?.retweetedStatus!)!)
-        self.rtCount = retweet.retweetCount
-      } else {
-        self.rtCount = tweet?.retweetCount
-      }
-      
-      print("Un-retweeting the Tweet. Retweet count is now \(self.rtCount!)")
+    TwitterClient.sharedInstance.unRetweet(params: ["id": originalTweetID], success: { (unretweeted) -> () in
       
       self.retweetStatus = false
+      self.rtCount = (unretweeted?.retweetCount)!-1
       self.retweetCountLabel.text = String(describing: self.rtCount!)
       self.retweetCountLabel.textColor = UIColor.darkGray
-      self.retweetButton.setImage(#imageLiteral(resourceName: "retweet_standard24"), for: .normal)
+      self.retweetButton.setImage(#imageLiteral(resourceName: "retweet_grey16"), for: .normal)
+
+      print("Un-retweeting the Tweet. Retweet count is now \(self.rtCount!)")
       
     } , failure: { (error: Error) -> () in
       print("Error: \(error.localizedDescription)")
@@ -217,9 +207,13 @@ class TweetCell: UITableViewCell {
   
   func getRetweetIdStr() {
     
-    TwitterClient.sharedInstance.getRetweetID(params: ["id": originalTweetID!], success: { (tweet) -> () in
+    print("now in get retweetID function")
+    
+    TwitterClient.sharedInstance.getRetweetID(tweetID: originalTweetID!, success: { (tweet) -> () in
       
       print("Got the tweet") 
+    
+      
       
     } , failure: { (error: Error) -> () in
       print("Error: \(error.localizedDescription)")
@@ -235,11 +229,11 @@ class TweetCell: UITableViewCell {
   // MARK: - REPLY TO TWEET 
   
  
+  @IBAction func onReply(_ sender: UIButton) {
+    print("Clicked on Reply")
+    
+  }
   
-  
-  
-  
-
   
   // MARK: - LAYOUT FOR FAVORITES AND RETWEETS
   
@@ -248,19 +242,19 @@ class TweetCell: UITableViewCell {
   
     if tweet.favorited! {
       self.favoriteCountLabel.textColor = UIColor.red
-      self.saveButton.setImage(#imageLiteral(resourceName: "unsave_red24"), for: .normal)
+      self.saveButton.setImage(#imageLiteral(resourceName: "unsave_redFill16"), for: .normal)
     } else if tweet.favorited == false {
       self.favoriteCountLabel.textColor = UIColor.darkGray
-      self.saveButton.setImage(#imageLiteral(resourceName: "addSave24"), for: .normal)
+      self.saveButton.setImage(#imageLiteral(resourceName: "save_greyFill16"), for: .normal)
     }
     
     if tweet.retweeted! {
-      self.retweetCountLabel.textColor = UIColor.green
-      self.retweetButton.setImage(#imageLiteral(resourceName: "retweeted24"), for: .normal)
+      self.retweetCountLabel.textColor = UIColor(red:0.05, green:0.87, blue:0.11, alpha:1.0)
+      self.retweetButton.setImage(#imageLiteral(resourceName: "retweet_green16"), for: .normal)
       
     } else if tweet.retweeted == false {
       self.retweetCountLabel.textColor = UIColor.darkGray
-      self.retweetButton.setImage(#imageLiteral(resourceName: "retweet_standard24"), for: .normal)
+      self.retweetButton.setImage(#imageLiteral(resourceName: "retweet_grey16"), for: .normal)
       
     }
   }

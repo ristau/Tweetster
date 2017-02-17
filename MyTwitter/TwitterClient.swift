@@ -156,10 +156,13 @@ class TwitterClient: BDBOAuth1SessionManager {
     })
   }
   
-  func getRetweetID(params: NSDictionary?, success: @escaping (_ tweet: Tweet?) -> (), failure: @escaping (Error) -> ()) {
+  func getRetweetID(tweetID: String, success: @escaping (_ tweet: Tweet?) -> (), failure: @escaping (Error) -> ()) {
+    
+//    https://api.twitter.com/1.1/statuses/show.json
+    let params = ["id": tweetID, "include_my_retweet": 1] as [String : Any]
     
     // getting the tweets
-    post("1.1/statuses/statuses/show/\(params!["id"]!).json?include_my_retweet=1", parameters: params, progress: nil, success: { (task:  URLSessionDataTask, response: Any) -> Void in
+    post("1.1/statuses/statuses/show.json", parameters: params, progress: nil, success: { (task:  URLSessionDataTask, response: Any) -> Void in
       
       let tweet = Tweet.tweetAsDictionary(response as! NSDictionary)
       print("TWEET WITH ID: \(tweet)") 
@@ -175,14 +178,14 @@ class TwitterClient: BDBOAuth1SessionManager {
  
   
   
-  func unRetweet(params: NSDictionary?, success: @escaping (_ tweet: Tweet?) -> (), failure: @escaping (Error) -> ()) {
+  func unRetweet(params: NSDictionary?, success: @escaping (_ unretweeted: Tweet?) -> (), failure: @escaping (Error) -> ()) {
     
     // getting the tweets
     post("1.1/statuses/unretweet/\(params!["id"]!).json", parameters: params, progress: nil, success: { (task:  URLSessionDataTask, response: Any) -> Void in
       
-      let tweet = Tweet.tweetAsDictionary(response as! NSDictionary)
-      
-      success(tweet)
+      let unretweeted = Tweet.tweetAsDictionary(response as! NSDictionary)
+      print("Successfully performed the unretweet")
+      success(unretweeted)
       
     }, failure: { (task: URLSessionDataTask?, error: Error) -> Void in
       failure(error)
