@@ -25,7 +25,7 @@ Pull to refresh and infinite loading are implemented, but create limit blocks.
 
 The following **additional** features are implemented:
 
-- [X] Implemended section header that displays date and time of tweet (shown in Week 4 GIF, removed in Week 5) 
+- [X] Implemented section header that displays date and time of tweet (shown in Week 4 GIF, removed in Week 5) 
 
 Please list two areas of the assignment you'd like to **discuss further with your peers** during the next class (examples include better ways to implement something, how to extend your app in certain ways, etc):
 
