@@ -262,25 +262,6 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
     })
   }
   
- 
-  //func goToProfile(_ sender: Any, tweet: Tweet) {
-  func goToProfile(sender: UIButton) {
-    
-    print("Tapped on Button") 
-    print("Going to Profile View")
-    let index = sender.tag
-    let tweet = tweets?[index]
-    print("TWEET TO SEND IS: \(tweet!.text!)")
-    
-    let userToSend = tweet!.user
-    print("USER TO BE VIEWED IS: \(tweet!.user!.name!)")
-    let profileVC = self.storyboard?.instantiateViewController(withIdentifier: "ProfileView") as! ProfileViewController
-    profileVC.user = userToSend
-
-    self.performSegue(withIdentifier: "FromTableViewToProfileView", sender: self)
-    
-  }
-  
   
   @IBAction func onProfileTap(_ sender: Any) {
     print("Tapped on profile")
@@ -309,7 +290,7 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
       
       if segue.identifier == "FromTableViewToProfileView"{
         
-        print("Going to Profile View")
+        print("Going to Profile View from the home timeline ")
         let button = sender as! UIButton
         let index = button.tag
         let tweet = tweets?[index]
