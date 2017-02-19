@@ -19,11 +19,13 @@ class TweetDetailViewController: UIViewController, UITableViewDataSource, UITabl
     override func viewDidLoad() {
         super.viewDidLoad()
 
+      self.navigationItem.title = "Detail"
+      
       tableView.dataSource = self
       tableView.delegate = self
       
+      tableView.estimatedRowHeight = 200
       tableView.rowHeight = UITableViewAutomaticDimension
-      tableView.estimatedRowHeight = 100
       
       tableView.reloadData()
       
@@ -32,7 +34,7 @@ class TweetDetailViewController: UIViewController, UITableViewDataSource, UITabl
   // MARK: - TABLEVIEW LOADING METHODS
   
   public func numberOfSections(in tableView: UITableView) -> Int {
-    return 5
+    return 4
   }
   
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -42,8 +44,8 @@ class TweetDetailViewController: UIViewController, UITableViewDataSource, UITabl
     case 0, 1, 2, 3:
       return 1
     
-    case 4:
-      return 10
+   // case 4:
+     // return 10
       
     default:
       return 0
@@ -52,15 +54,17 @@ class TweetDetailViewController: UIViewController, UITableViewDataSource, UITabl
   
   func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
    
+
+    
     switch indexPath.section {
       
     case 0:
       return 65
     
-   case 1:
+    case 1:
       return 200
       
-    case 2,3,4:
+    case 2,3:
       return 50
       
     default:

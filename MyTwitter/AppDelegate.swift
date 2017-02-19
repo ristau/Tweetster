@@ -13,9 +13,14 @@ import BDBOAuth1Manager
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
   var window: UIWindow?
-
+  var navigationBarAppearance = UINavigationBar.appearance()
 
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    
+    navigationBarAppearance.tintColor = UIColor.white
+    navigationBarAppearance.barTintColor = UIColor(red:0.00, green:0.67, blue:0.93, alpha:1.0) // hex 00ACED
+    navigationBarAppearance.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.white]
+
     
     if User.currentUser != nil {
       print("There is a current user")

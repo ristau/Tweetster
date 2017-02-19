@@ -10,8 +10,6 @@ import UIKit
 
 class ProfileCell: UITableViewCell {
   
-  
-  
   @IBOutlet weak var locationIcon: UIImageView!
   @IBOutlet weak var locationLabel: UILabel!
   @IBOutlet weak var profileBanner: UIImageView!
@@ -38,6 +36,8 @@ class ProfileCell: UITableViewCell {
 
       if let profileUrl = user?.profileUrl {
         profileImage.setImageWith(profileUrl)
+        profileImage.layer.cornerRadius = 3
+        profileImage.clipsToBounds = true
       }
       
       if let profileBannerUrl = user?.profileBannerUrl {

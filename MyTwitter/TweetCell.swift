@@ -171,7 +171,7 @@ class TweetCell: UITableViewCell {
         self.retweetStatus = true
         self.retweetCountLabel.text = String(describing: self.rtCount!)
         self.retweetCountLabel.textColor = UIColor(red:0.05, green:0.87, blue:0.11, alpha:1.0)
-        self.retweetButton.setImage(#imageLiteral(resourceName: "retweet_green16"), for: .normal)
+        self.retweetButton.setImage(#imageLiteral(resourceName: "retweetGreenFill16"), for: .normal)
         
       } , failure: { (error: Error) -> () in
         print("Error: \(error.localizedDescription)")
@@ -192,7 +192,7 @@ class TweetCell: UITableViewCell {
       self.rtCount = (unretweeted?.retweetCount)!-1
       self.retweetCountLabel.text = String(describing: self.rtCount!)
       self.retweetCountLabel.textColor = UIColor.darkGray
-      self.retweetButton.setImage(#imageLiteral(resourceName: "retweet_grey16"), for: .normal)
+      self.retweetButton.setImage(#imageLiteral(resourceName: "retweet_greyFill16"), for: .normal)
 
       print("Un-retweeting the Tweet. Retweet count is now \(self.rtCount!)")
       
@@ -226,15 +226,15 @@ class TweetCell: UITableViewCell {
     
     if tweet.retweeted! {
       self.retweetCountLabel.textColor = UIColor(red:0.05, green:0.87, blue:0.11, alpha:1.0)
-      self.retweetButton.setImage(#imageLiteral(resourceName: "retweet_green16"), for: .normal)
+      self.retweetButton.setImage(#imageLiteral(resourceName: "retweetGreenFill16"), for: .normal)
       
     } else if tweet.retweeted == false {
       self.retweetCountLabel.textColor = UIColor.darkGray
-      self.retweetButton.setImage(#imageLiteral(resourceName: "retweet_grey16"), for: .normal)
+      self.retweetButton.setImage(#imageLiteral(resourceName: "retweet_greyFill16"), for: .normal)
     }
     
     self.replyButton.setImage(#imageLiteral(resourceName: "reply_grey16"), for: .normal)
-    self.replyButton.setImage(#imageLiteral(resourceName: "reply_blue"), for: .highlighted)
+    self.replyButton.setImage(#imageLiteral(resourceName: "reply_tweetBlue16"), for: .highlighted)
     
   }
   

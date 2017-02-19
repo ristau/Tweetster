@@ -32,20 +32,23 @@ class ActionsCell: UITableViewCell {
         originalTweetID = tweet.idStr
       }
       
-      favStatus = tweet.favorited
-      retweetStatus = tweet.retweeted
+      favStatus = tweet.favorited!
+      retweetStatus = tweet.retweeted!
       
       if tweet.retweetedStatus != nil {
         let retweet = Tweet.tweetAsDictionary(tweet.retweetedStatus!)
         originalTweetID = retweet.idStr
         favCount = retweet.favoritesCount
         rtCount = retweet.retweetCount
+
         
       } else {
         originalTweetID = tweet.idStr
         favCount = tweet.favoritesCount
         rtCount = tweet.retweetCount
       }
+ 
+      setLabels()
     }
     
   }
@@ -83,8 +86,14 @@ class ActionsCell: UITableViewCell {
         
         print("Saving TweetID: \(self.originalTweetID!) to favorites. New Status is: \(tweet!.favorited!).  FavCount is: \(self.favCount!)")
         self.favStatus = true
-        self.favButton.setImage(#imageLiteral(resourceName: "unsave_red24"), for: .normal)
+        self.favButton.setImage(#imageLiteral(resourceName: "unSave24"), for: .normal)
         
+//        let cell = UITableViewCell() as! RetweetFavCell
+//          var count = cell.favCount!
+//          count += 1
+//          cell.favCountLabel.text = String(describing: count)
+        
+  
       }, failure: { (error: Error) -> () in
         print("Could not successfully save tweet.  Error: \(error.localizedDescription)")
       })
@@ -104,7 +113,7 @@ class ActionsCell: UITableViewCell {
         
         print("Removing from favorites.  Status after unsaving: \(self.favCount!)")
         self.favStatus = false
-        self.favButton.setImage(#imageLiteral(resourceName: "addSave24"), for: .normal)
+        self.favButton.setImage(#imageLiteral(resourceName: "addSaveGrey24"), for: .normal)
         
       }, failure: { (error: Error) -> () in
         print("Error: \(error.localizedDescription)")
@@ -115,8 +124,8 @@ class ActionsCell: UITableViewCell {
   // MARK: -  RETWEET
   
   @IBAction func onRetweet(_ sender: UIButton) {
-    print("pressed on retweet")
     
+    print("Clicked on Retweet Button")
     
     if retweetStatus == false {
       
@@ -132,7 +141,7 @@ class ActionsCell: UITableViewCell {
         print("Retweeting the Tweet. Retweet count is now \(self.rtCount!)")
         
         self.retweetStatus = true
-        self.retweetButton.setImage(#imageLiteral(resourceName: "retweeted24"), for: .normal)
+        self.retweetButton.setImage(#imageLiteral(resourceName: "retweetGreenFill24"), for: .normal)
         
       } , failure: { (error: Error) -> () in
         print("Error: \(error.localizedDescription)")
@@ -140,47 +149,27 @@ class ActionsCell: UITableViewCell {
       
     } else if retweetStatus == true {
       
-      print("getting ready for unretweeting")
-      getRetweetIdStr()
-      
+      performUnRetweet()
     }
+
     
   }
 
-func performUnRetweet() {
   
-  TwitterClient.sharedInstance.unRetweet(params: ["id": originalTweetID!], success: { (tweet) -> () in
+  func performUnRetweet() {
     
-    if (tweet?.retweetedStatus) != nil {
-      let retweet = Tweet.tweetAsDictionary((tweet?.retweetedStatus!)!)
-      self.rtCount = retweet.retweetCount
-    } else {
-      self.rtCount = tweet?.retweetCount
-    }
-    
-    print("Un-retweeting the Tweet. Retweet count is now \(self.rtCount!)")
-    
-    self.retweetStatus = false
-    self.retweetButton.setImage(#imageLiteral(resourceName: "retweet_standard24"), for: .normal)
-    
-  } , failure: { (error: Error) -> () in
-    print("Error: \(error.localizedDescription)")
-  })
-}
-
-
-func getRetweetIdStr() {
-  
-  TwitterClient.sharedInstance.getRetweetID(tweetID: originalTweetID!, success: { (tweet) -> () in
-    
-    print("Got the tweet")
-    
-  } , failure: { (error: Error) -> () in
-    print("Error: \(error.localizedDescription)")
-  })
-  
-}
- 
+    TwitterClient.sharedInstance.unRetweet(params: ["id": originalTweetID!], success: { (unretweeted) -> () in
+      
+      self.retweetStatus = false
+      self.rtCount = (unretweeted?.retweetCount)!-1
+      self.retweetButton.setImage(#imageLiteral(resourceName: "retweetGreyFill24"), for: .normal)
+      
+      
+    } , failure: { (error: Error) -> () in
+      print("Error: \(error.localizedDescription)")
+    })
+  }
+   
 
   
 // MARK: - REPLY
@@ -189,6 +178,25 @@ func getRetweetIdStr() {
     print("pressed on reply")
   }
   
+  
+  // MARK: - SET LABELS
+  
+  func setLabels() {
+    
+    if tweet.favorited! {
+        self.favButton.setImage(#imageLiteral(resourceName: "unSave24"), for: .normal)
+    } else if tweet.favorited == false {
+      self.favButton.setImage(#imageLiteral(resourceName: "addSaveGrey24"), for: .normal)
+    }
+    
+    if tweet.retweeted! {
+      self.retweetButton.setImage(#imageLiteral(resourceName: "retweetGreenFill24"), for: .normal)
+      
+    } else if tweet.retweeted == false {
+      self.retweetButton.setImage(#imageLiteral(resourceName: "retweetGreyFill24"), for: .normal)
+    }
+    
+  }
   
   
   

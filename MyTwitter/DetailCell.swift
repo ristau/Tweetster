@@ -44,7 +44,9 @@ class DetailCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
       
-
+      profileImage.layer.cornerRadius = 3
+      profileImage.clipsToBounds = true
+    
   }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

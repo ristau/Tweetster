@@ -34,8 +34,8 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationItem.title = "My Tweets"
-       // UIColor(red:0.75, green:0.92, blue:0.95, alpha:1.0) // hex# beebf3
+
+        self.navigationItem.title = "Timeline"
       
         // Set up Infinite Scroll loading indicator 
         let frame = CGRect(x: 0, y: tableView.contentSize.height, width: tableView.bounds.size.width, height: InfiniteScrollActivityView.defaultHeight)
@@ -61,8 +61,13 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
 
         makeNetworkCall()
  
-      
   }
+  
+
+  override func viewWillAppear(_ animated: Bool) {
+    self.tableView.reloadData()
+  }
+  
   
   override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(true)
@@ -134,27 +139,6 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
     
     refreshData()
     
-   // let refreshURL = URL(string: "https://api.twitter.com/1.1/statuses/home_timeline.json")
-   // var request = URLRequest(url: refreshURL!)
-   // request.httpMethod = "get"
-    
-    //let session = URLSession(configuration: .default, delegate: nil, delegateQueue: OperationQueue.main)
-    //let task: URLSessionDataTask = session.dataTask(with: request) { (data: Data?, response: URLResponse?, error: Error?) in
-
-  //  let session = URLSession.shared
-    
-  //  session.dataTask(with: request) {data, response, Error in
-      // update data
-    //  print("Refreshing the data")
-      
-      // reload tableview
-    //  self.tableView.reloadData()
-      
-      // tell the refresh control to stop spinning
-    //  refreshControl.endRefreshing()
-      
-      
-     // }.resume()
   }
   
   // MARK: - Logout
