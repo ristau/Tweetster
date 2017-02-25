@@ -26,6 +26,7 @@ Pull to refresh and infinite loading are implemented, but create limit blocks.
 The following **additional** features are implemented:
 
 - [X] Implemented custom logout button with title header positioned under the image 
+- [X] Implemented launch screen and app icons
 
 Please list two areas of the assignment you'd like to **discuss further with your peers** during the next class (examples include better ways to implement something, how to extend your app in certain ways, etc):
 
@@ -94,7 +95,6 @@ The following **optional** features are implemented:
 
 The following **additional** features are implemented:
 
-- [X] Added launch screen and app icons
 - [X] Added reply button to the TweetCell in the TweetsViewController
 
 
