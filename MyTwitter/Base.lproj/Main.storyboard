@@ -44,6 +44,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="loginButton" destination="eSP-aZ-X02" id="A0P-CQ-yXh"/>
                         <segue destination="WkD-Hj-sEb" kind="presentation" identifier="loginSegue" id="Lwl-3k-13Q"/>
                     </connections>
                 </viewController>
@@ -91,19 +92,19 @@
                                                     </connections>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tweet Text " textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" enabled="NO" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SZQ-Sa-Jat">
-                                                    <rect key="frame" x="95" y="27" width="220" height="14.5"/>
+                                                    <rect key="frame" x="95" y="27" width="220" height="15"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sbS-B4-5qY">
-                                                    <rect key="frame" x="296.5" y="12" width="18.5" height="10"/>
+                                                    <rect key="frame" x="296" y="12" width="19" height="10"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="8"/>
                                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Author" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dpM-BX-hdy">
-                                                    <rect key="frame" x="95" y="10" width="34.5" height="12"/>
+                                                    <rect key="frame" x="95" y="10" width="35" height="12"/>
                                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="10"/>
                                                     <color key="textColor" red="0.0" green="0.67450980392156867" blue="0.92941176470588238" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -221,10 +222,18 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="jfD-0b-4Em">
-                        <barButtonItem key="leftBarButtonItem" title="Logout" id="dpg-TF-0kM">
-                            <connections>
-                                <action selector="logout:" destination="HQo-r4-0OM" id="t2t-VP-rIM"/>
-                            </connections>
+                        <barButtonItem key="leftBarButtonItem" style="plain" id="kIy-Ou-o76">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" id="Mhj-1y-84K">
+                                <rect key="frame" x="16" y="9" width="81" height="25"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="12"/>
+                                <inset key="titleEdgeInsets" minX="-65" minY="12" maxX="0.0" maxY="0.0"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="-10" maxX="0.0" maxY="11"/>
+                                <state key="normal" title="Logout" image="logoutWhite24"/>
+                                <connections>
+                                    <action selector="onLogout:" destination="HQo-r4-0OM" eventType="touchUpInside" id="Ff1-uq-0F2"/>
+                                </connections>
+                            </button>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" image="composeBlack24" id="1LS-fA-UK1">
                             <connections>
@@ -234,12 +243,13 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="logoutButton" destination="Mhj-1y-84K" id="gNN-j5-5HU"/>
                         <outlet property="tableView" destination="r7C-Ii-FRL" id="BpH-v4-nfg"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Yds-Ym-ela" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1938.75" y="113.02816901408451"/>
+            <point key="canvasLocation" x="1989" y="-55"/>
         </scene>
         <!--Title-->
         <scene sceneID="yGf-Om-3dj">
@@ -789,6 +799,7 @@
     <resources>
         <image name="addSaveGrey24" width="24" height="24"/>
         <image name="composeBlack24" width="24" height="24"/>
+        <image name="logoutWhite24" width="24" height="24"/>
         <image name="pinGrey16" width="16" height="16"/>
         <image name="replyGrey24" width="24" height="24"/>
         <image name="reply_blue16" width="16" height="16"/>
@@ -800,6 +811,6 @@
         <image name="sendWhite24" width="24" height="24"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="faf-dg-BAR"/>
+        <segue reference="zF4-IH-ZFm"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -18,6 +18,7 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
   var saveCountLabel: UILabel?
   var saveButton: UIButton?
 
+  @IBOutlet weak var logoutButton: UIButton!
 
   // infinite scrolling properties
   var isMoreDataLoading = false
@@ -37,7 +38,14 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
 
         self.navigationItem.title = "Timeline"
       
-        // Set up Infinite Scroll loading indicator 
+        // Customize Logout Button
+      //logoutButton.setImage(#imageLiteral(resourceName: "logoutWhite24"), for: .normal)
+      //logoutButton.setTitle("Logout", for: .normal)
+      //logoutButton.titleEdgeInsets = UIEdgeInsetsMake(5, 0, 0, 0)
+      //logoutButton.contentEdgeInsets = UIEdgeInsets(top: 5, left: 0, bottom: 5, right: 0)
+      
+      
+        // Set up Infinite Scroll loading indicator
         let frame = CGRect(x: 0, y: tableView.contentSize.height, width: tableView.bounds.size.width, height: InfiniteScrollActivityView.defaultHeight)
         loadingMoreView = InfiniteScrollActivityView(frame: frame)
         loadingMoreView!.isHidden = true
@@ -141,12 +149,6 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
     
   }
   
-  // MARK: - Logout
-  
-  
-  @IBAction func logout(_ sender: UIBarButtonItem) {
-      TwitterClient.sharedInstance.logout()
-  }
   
   // MARK: - Network Call
   
@@ -251,11 +253,22 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
     print("Tapped on profile")
   }
   
-  
+
+// MARK: - Compose Tweet 
   
   @IBAction func composeTweet(_ sender: UIBarButtonItem) {
     print("Going to compose tweet") 
   }
+  
+  
+  // MARK: - Logout
+  
+  @IBAction func onLogout(_ sender: UIButton) {
+    print("Tapped on logout")
+    TwitterClient.sharedInstance.logout()
+  }
+  
+  
   
     // MARK: - Navigation
   
