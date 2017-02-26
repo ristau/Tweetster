@@ -160,7 +160,7 @@ class TwitterClient: BDBOAuth1SessionManager {
   }
   
 
-  // save to favorites
+  // unsave to favorites
   func unSaveAsFavorite(params: NSDictionary?, success: @escaping (_ tweet: Tweet?) -> (), failure: @escaping (Error) -> ()) {
     
     // getting the tweets

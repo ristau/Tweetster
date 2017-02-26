@@ -31,7 +31,13 @@ class TweetCell: UITableViewCell {
   var rtCount: Int?
   var originalTweetID: String?
   var retweetID: String?
-  var formatter = DateFormatter()
+  
+  // Date Related Variables
+  var dateFormatter = DateFormatter()
+  //var dateComponents = DateComponents()
+  let calendar = NSCalendar.current
+  let currentDate = Date()
+  
   
   var tweet: Tweet! {
     
@@ -46,11 +52,35 @@ class TweetCell: UITableViewCell {
         profileImage.setImageWith(profileUrl)
       }
       
+      // set date and time based on intervals
       if let date = tweet?.timestamp {
         
-        formatter.timeStyle = .short
-        formatter.dateStyle = .short
-        dateTextLabel.text = formatter.string(from: date)
+        dateFormatter.timeStyle = .short
+        dateFormatter.dateStyle = .short
+
+        let dateComponentsFormatter = DateComponentsFormatter()
+        dateComponentsFormatter.unitsStyle = DateComponentsFormatter.UnitsStyle.short
+        dateComponentsFormatter.allowedUnits = [NSCalendar.Unit.year, NSCalendar.Unit.month, NSCalendar.Unit.day, NSCalendar.Unit.hour, NSCalendar.Unit.minute]  // full example, will shorten based on time interval
+  
+        let oneDayAgo = Date(timeIntervalSinceNow: -60 * 60 * 24)
+        let oneHourAgo = Date(timeIntervalSinceNow: -60*60)
+        
+        if date.timeIntervalSinceReferenceDate > oneHourAgo.timeIntervalSinceReferenceDate {
+      
+          dateComponentsFormatter.allowedUnits = [NSCalendar.Unit.minute]
+          let minutesDifference = dateComponentsFormatter.string(from: date, to: currentDate)
+          dateTextLabel.text = minutesDifference! + " ago"
+  
+        } else if date.timeIntervalSinceReferenceDate > oneDayAgo.timeIntervalSinceReferenceDate {
+          dateComponentsFormatter.allowedUnits = [NSCalendar.Unit.hour]
+          let hourDifference = dateComponentsFormatter.string(from: date, to: currentDate)
+          print("hour diff: \(hourDifference!)")
+          dateTextLabel.text = hourDifference! + " ago"
+          
+        } else {
+          dateTextLabel.text = dateFormatter.string(from: date)
+        }
+        
       }
       
       if tweet.retweetedStatus != nil {

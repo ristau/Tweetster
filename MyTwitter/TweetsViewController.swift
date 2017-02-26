@@ -27,23 +27,12 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
   // UIRefreshControl
   let refreshControl = UIRefreshControl()
   
-  // date formatter 
-  let dateFormatter = DateFormatter()
-  
-
   @IBOutlet weak var tableView: UITableView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         self.navigationItem.title = "Timeline"
-      
-        // Customize Logout Button
-      //logoutButton.setImage(#imageLiteral(resourceName: "logoutWhite24"), for: .normal)
-      //logoutButton.setTitle("Logout", for: .normal)
-      //logoutButton.titleEdgeInsets = UIEdgeInsetsMake(5, 0, 0, 0)
-      //logoutButton.contentEdgeInsets = UIEdgeInsets(top: 5, left: 0, bottom: 5, right: 0)
-      
       
         // Set up Infinite Scroll loading indicator
         let frame = CGRect(x: 0, y: tableView.contentSize.height, width: tableView.bounds.size.width, height: InfiniteScrollActivityView.defaultHeight)
