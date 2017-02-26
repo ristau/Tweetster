@@ -2,7 +2,7 @@
 
 **MyTwitter** is a basic twitter app to read and compose tweets the Twitter API(https://apps.twitter.com/).
 
-Time spent: **22** hours spent in total
+Time spent: **24** hours spent in total
 
 ## User Stories
 
@@ -25,7 +25,8 @@ Pull to refresh and infinite loading are implemented, but create limit blocks.
 
 The following **additional** features are implemented:
 
-- [X] Implemented custom logout button with title header positioned under the image 
+- [X] Dates & Timestamp customized based on if tweet was sent less than an hour ago (displays minutes ago) or within the last 24 hours (displays hours ago)
+- [X] Implemented custom logout button with title positioned via customizedoffsets under the image 
 - [X] Implemented launch screen and app icons
 
 Please list two areas of the assignment you'd like to **discuss further with your peers** during the next class (examples include better ways to implement something, how to extend your app in certain ways, etc):
@@ -37,7 +38,7 @@ Please list two areas of the assignment you'd like to **discuss further with you
 
 Here's a walkthrough of implemented user stories:
 
-<img src='http://i.imgur.com/41udklc.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='http://i.imgur.com/7toaRr4.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 GIF created with LiceCap (http://www.cockos.com/licecap/).
 
