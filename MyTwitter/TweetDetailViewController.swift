@@ -179,7 +179,17 @@ class TweetDetailViewController: UIViewController, UITableViewDataSource, UITabl
         print("Error: \(error.localizedDescription)")
       })
     }
-
+  }
+  
+  func onComposeTweetButtonClicked(tweetText: String) {
+    
+    print("This is the tweet: \(tweetText)")
+    TwitterClient.sharedInstance.publishTweet(text: tweetText) { newTweet in
+    }
+  }
+  
+  func onReplyTweetButtonClicked(tweetText: String, replyID: NSNumber) {
+    
   }
   
   
@@ -195,10 +205,20 @@ class TweetDetailViewController: UIViewController, UITableViewDataSource, UITabl
         
         let replyNavVC = segue.destination as? UINavigationController
         let replyVC = replyNavVC?.viewControllers.first as! ComposeTweetViewController
+        replyVC.composeTweetDelegate = self 
         replyVC.replyTweet = tweet
         replyVC.isReply = true
         
       }
+      
+      if segue.identifier == "ComposeTweet" {
+        
+        let composeTweetNavVC = segue.destination as? UINavigationController
+        let composeVC = composeTweetNavVC?.viewControllers.first as! ComposeTweetViewController
+        composeVC.composeTweetDelegate = self
+        
+      }
+      
     }
 }
 
@@ -206,8 +226,7 @@ extension TweetAction {
   
   func onFavButtonClicked(tweetCell: TweetCell){}
   func onRetweetButtonClicked(tweetCell: TweetCell){}
-  func onProfileImageClicked(tweet: Tweet){}
-  
+  func onComposeTweetButtonClicked(tweetText: String) {}
 }
 
 

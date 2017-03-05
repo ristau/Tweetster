@@ -14,7 +14,7 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
   var tweets: [Tweet]?
   var tweetID: String?
   var tweet: Tweet?
-  
+
   
   @IBOutlet weak var logoutButton: UIButton!
 
@@ -52,8 +52,8 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
         tableView.delegate = self
         tableView.estimatedRowHeight = 100
         tableView.rowHeight = UITableViewAutomaticDimension
-
-        makeNetworkCall()
+      
+      makeNetworkCall()
  
   }
   
@@ -267,11 +267,7 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
       })
     }
   }
-  
-  func onProfileImageClicked(tweet: Tweet){
-    
-  }
-  
+
   
 // MARK: - On Profile Tap 
   
@@ -282,9 +278,21 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
   
 
 // MARK: - Compose Tweet 
+
+  func onComposeTweetButtonClicked(tweetText: String) {
+    
+    TwitterClient.sharedInstance.publishTweet(text: tweetText) { newTweet in
+      self.tweets?.insert(newTweet, at: 0)
+      self.tableView.reloadData()
+    }
+  }
   
-  @IBAction func composeTweet(_ sender: UIBarButtonItem) {
-    print("Going to compose tweet") 
+  func onReplyTweetButtonClicked(tweetText: String, replyID: NSNumber) {
+
+    TwitterClient.sharedInstance.replyTweet(text: tweetText, replyToTweetID: replyID) { newTweet in
+      self.tweets?.insert(newTweet, at: 0)
+      self.tableView.reloadData()
+    }
   }
   
   
@@ -339,11 +347,20 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
         
         let replyNavVC = segue.destination as? UINavigationController
         let replyVC = replyNavVC?.viewControllers.first as! ComposeTweetViewController
+        replyVC.replyTweetDelegate = self
         replyVC.replyTweet = tweet
         replyVC.isReply = true
 
       }
-
+      
+      if segue.identifier == "Compose" {
+        
+        let composeTweetNavVC = segue.destination as? UINavigationController
+        let composeVC = composeTweetNavVC?.viewControllers.first as! ComposeTweetViewController
+        composeVC.composeTweetDelegate = self
+        
+      }
+      
      }
   }
 

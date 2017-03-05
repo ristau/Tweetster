@@ -13,7 +13,8 @@ class ComposeTweetViewController: UIViewController, UITextViewDelegate{
   
   @IBOutlet weak var tweetTextView: UITextView!
   @IBOutlet weak var charCountLabel: UILabel!
-  
+  var composeTweetDelegate: TweetAction!
+  var replyTweetDelegate: TweetAction!
   
   var user: User!
   var originalCharLimit: Int = 140
@@ -119,7 +120,7 @@ class ComposeTweetViewController: UIViewController, UITextViewDelegate{
   
   
   @IBAction func onCancel(_ sender: UIBarButtonItem) {
-    print("Pressed Done, Exiting the View Controller")
+    print("Pressed Cancel, Exiting the View Controller")
     dismiss(animated: true, completion: nil)
     
   }
@@ -135,24 +136,23 @@ class ComposeTweetViewController: UIViewController, UITextViewDelegate{
   
   
   @IBAction func submitTweet(_ sender: UIButton) {
-    print("Pressed Submit Tweet")
+    
     tweetContent = tweetTextView.text
-    print("Tweet to Send: \(tweetContent)")
-    createTweet()
+    createTweet(tweetContent: tweetContent)
+  
   }
   
-  func createTweet(){
-
-    if isReply! {
+  func createTweet(tweetContent: String){
     
-      TwitterClient.sharedInstance.replyTweet(text: tweetContent, replyToTweetID: replyID) { newTweet in
-        print("Replying to the tweet")
-      }
+    if tweetContent != "" {
+        self.presentingViewController!.dismiss(animated: true, completion: nil)
+        self.replyTweetDelegate.onReplyTweetButtonClicked(tweetText: tweetContent, replyID: replyID!)
       
-    }
-    else {
-    TwitterClient.sharedInstance.publishTweet(text: tweetContent) { newTweet in
-      print("Composing new tweet")
+      if isReply == true {
+        
+      } else {
+        self.presentingViewController!.dismiss(animated: true, completion: nil)
+        self.composeTweetDelegate.onComposeTweetButtonClicked(tweetText: tweetContent)
       }
     }
   }
