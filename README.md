@@ -66,7 +66,7 @@ Challenges encountered while building the app: Unretweeting as outlined in Step 
 
 ##Project 5 - *Twitter Part 2*
 
-Time spent: **20** hours spent in total
+Time spent: **28** hours spent in total
 
 ## User Stories
 
@@ -78,12 +78,11 @@ The following **required** functionality is completed:
    - [X] Contains a section with the users basic stats: # tweets, # following, # followers
 - [X] Home Timeline: Tapping on a user image should bring up that user's profile page
 - [X] Compose Page: User can compose a new tweet by tapping on a compose button.
-Profile view segue is correctly called from hometimeline, but VC does not appear. 
 
 The following **optional** features are implemented:
 
 - [X] When composing, you should have a countdown for the tweet limit.
-- [ ] After creating a new tweet, a user should be able to view it in the timeline immediately without refetching the timeline from the network.
+- [X] After creating a new tweet, a user should be able to view it in the timeline immediately without refetching the timeline from the network.
 - [ ] Profile Page
    - [ ] Implement the paging view for the user description.
    - [ ] As the paging view moves, increase the opacity of the background screen. See the actual Twitter app for this effect
@@ -101,8 +100,8 @@ The following **additional** features are implemented:
 
 Please list two areas of the assignment you'd like to **discuss further with your peers** during the next class (examples include better ways to implement something, how to extend your app in certain ways, etc):
 
-1. 
-2. 
+1. Implement unwind segue when traversing back after a segue as a way of passing data 
+2. I would like to get more familiar with Core Animation
 
 ## Video Walkthrough 
 
