@@ -11,7 +11,7 @@ import BDBOAuth1Manager
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
+  
   var window: UIWindow?
   var navigationBarAppearance = UINavigationBar.appearance()
 
@@ -20,7 +20,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     navigationBarAppearance.tintColor = UIColor.white
     navigationBarAppearance.barTintColor = UIColor(red:0.00, green:0.67, blue:0.93, alpha:1.0) // hex 00ACED
     navigationBarAppearance.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.white]
-
+    
+    UIApplication.shared.statusBarStyle = .lightContent
+    
     
     if User.currentUser != nil {
       print("There is a current user")

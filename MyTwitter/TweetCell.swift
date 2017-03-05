@@ -10,31 +10,30 @@ import UIKit
 import AFNetworking
 
 class TweetCell: UITableViewCell {
+
+
   
-  @IBOutlet weak var tweetTextLabel: UILabel!
   @IBOutlet weak var favoriteCountLabel: UILabel!
+  @IBOutlet weak var saveButton: UIButton!
+  
   @IBOutlet weak var retweetCountLabel: UILabel!
+  @IBOutlet weak var retweetButton: UIButton!
+
   @IBOutlet weak var nameLabel: UILabel!
   @IBOutlet weak var screenNameLabel: UILabel!
   @IBOutlet weak var profileImage: UIImageView!
   @IBOutlet weak var dateTextLabel: UILabel!
   
+  @IBOutlet weak var tweetTextLabel: UILabel!
+  
   @IBOutlet weak var replyButton: UIButton!
-  @IBOutlet weak var saveButton: UIButton!
-  @IBOutlet weak var retweetButton: UIButton!
   @IBOutlet weak var profileButton: UIButton!
   
-  
-  var favStatus: Bool?
-  var favCount: Int?
-  var retweetStatus: Bool?
-  var rtCount: Int?
-  var originalTweetID: String?
-  var retweetID: String?
-  
+  var tweetActionDelegate: TweetAction!
+  var tweetID: String!
+
   // Date Related Variables
   var dateFormatter = DateFormatter()
-  //var dateComponents = DateComponents()
   let calendar = NSCalendar.current
   let currentDate = Date()
   
@@ -42,9 +41,9 @@ class TweetCell: UITableViewCell {
   var tweet: Tweet! {
     
     didSet {
-  
+      
       tweetTextLabel.text = tweet.text
-  
+      
       nameLabel.text = tweet.user?.name!
       screenNameLabel.text = ("@" + (tweet.user?.screenname!)!)
       
@@ -52,7 +51,14 @@ class TweetCell: UITableViewCell {
         profileImage.setImageWith(profileUrl)
       }
       
-      // set date and time based on intervals
+      setTweetID()
+      setTweetCounts()
+      setFavoriteLabels()
+      setRetweetLabels()
+      setReplyButtonStyling()
+      
+      
+      // SET DATE AND TIME BASED ON INTERVALS
       if let date = tweet?.timestamp {
         
         dateFormatter.timeStyle = .short
@@ -60,7 +66,8 @@ class TweetCell: UITableViewCell {
 
         let dateComponentsFormatter = DateComponentsFormatter()
         dateComponentsFormatter.unitsStyle = DateComponentsFormatter.UnitsStyle.short
-        dateComponentsFormatter.allowedUnits = [NSCalendar.Unit.year, NSCalendar.Unit.month, NSCalendar.Unit.day, NSCalendar.Unit.hour, NSCalendar.Unit.minute]  // full example, will shorten based on time interval
+        dateComponentsFormatter.allowedUnits = [NSCalendar.Unit.year, NSCalendar.Unit.month, NSCalendar.Unit.day, NSCalendar.Unit.hour, NSCalendar.Unit.minute]
+        // above is full example, will shorten below based on selected time interval
   
         let oneDayAgo = Date(timeIntervalSinceNow: -60 * 60 * 24)
         let oneHourAgo = Date(timeIntervalSinceNow: -60*60)
@@ -80,30 +87,8 @@ class TweetCell: UITableViewCell {
         } else {
           dateTextLabel.text = dateFormatter.string(from: date)
         }
-        
-      }
-      
-      if tweet.retweetedStatus != nil {
-        let retweet = Tweet.tweetAsDictionary(tweet.retweetedStatus!)
-        originalTweetID = retweet.idStr
-        favCount = retweet.favoritesCount
-        rtCount = retweet.retweetCount
-        
-      } else {
-        originalTweetID = tweet.idStr
-        favCount = tweet.favoritesCount
-        rtCount = tweet.retweetCount
-      }
-      
-      favoriteCountLabel.text = String(describing: favCount!)
-      retweetCountLabel.text = String(describing: rtCount!)
-      
-      favStatus = tweet.favorited!
-      retweetStatus = tweet.retweeted!
-    
-      setLabels()
-  
-    }
+      }  // end set up time and date
+    } // end set up tweet
   }
 
 
@@ -114,123 +99,38 @@ class TweetCell: UITableViewCell {
       profileImage.clipsToBounds = true
       
     }
-  
-  
 
      override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     
     }
 
-  // MARK: - SAVE & UNSAVE AS FAVORITE 
+  // MARK: - SET ID AND COUNT
+
+  func setTweetID(){
+    
+    tweetID = Tweet.getTweetID(tweet: tweet)
+  }
   
+  func setTweetCounts() {
+    
+    favoriteCountLabel.text = String(describing: (Tweet.getFavCount(tweet: tweet)))
+    retweetCountLabel.text = String(describing: tweet.retweetCount!)
+    
+  }
+  
+  // MARK: - SAVE/UNSAVE AS FAVORITE & RETWEET/UNRETWEET
   
   @IBAction func onSave(_ sender: UIButton) {
     
-    print("Clicked on Save/Unsave")
-    
-    if favStatus == false {
-      
-      TwitterClient.sharedInstance.createFav(params: ["id": tweet.idStr!], success: { (tweet) -> () in
-        
-        if (tweet?.retweetedStatus) != nil {
-          let retweet = Tweet.tweetAsDictionary((tweet?.retweetedStatus!)!)
-          self.favCount = retweet.favoritesCount
-        } else {
-          self.favCount = tweet?.favoritesCount
-        }
-        
-        
-        print("Saving TweetID: \(self.originalTweetID!) to favorites. New Status is: \(tweet!.favorited!).  FavCount is: \(self.favCount!)")
-        self.favStatus = true
-        self.favoriteCountLabel.text = String(describing: self.favCount!)
-        self.favoriteCountLabel.textColor = UIColor.red
-        self.saveButton.setImage(#imageLiteral(resourceName: "unsave_redFill16"), for: .normal)
-        
-      }, failure: { (error: Error) -> () in
-        print("Could not successfully save tweet.  Error: \(error.localizedDescription)")
-      })
-    }
-    
-    else if favStatus == true {
-      
-      TwitterClient.sharedInstance.unSaveAsFavorite(params: ["id": originalTweetID!], success: { (tweet) -> () in
-     
-        if (tweet?.retweetedStatus) != nil {
-          let retweet = Tweet.tweetAsDictionary((tweet?.retweetedStatus!)!)
-          self.favCount = retweet.favoritesCount
-        } else {
-          self.favCount = tweet?.favoritesCount
-        }
-        
-        print("Removing from favorites.  Status after unsaving: \(self.favCount!)")
-        self.favStatus = false
-        self.favoriteCountLabel.text = String(self.favCount!)
-        self.favoriteCountLabel.textColor = UIColor.darkGray
-        self.saveButton.setImage(#imageLiteral(resourceName: "save_greyFill16"), for: .normal)
-        
-      }, failure: { (error: Error) -> () in
-        print("Error: \(error.localizedDescription)")
-      })
-    }
+    self.tweetActionDelegate.onFavButtonClicked(tweetCell: self)
     
   }
-  
-  
-  
-     // MARK: - RETWEETING & UNRETWEETING
-  
-  
+ 
   @IBAction func onRetweet(_ sender: Any) {
-    
-    print("Clicked on Retweet Button")
-    
-    if retweetStatus == false {
-      
-      TwitterClient.sharedInstance.retweet(params: ["id": originalTweetID!], success: { (tweet) -> () in
-        
-        if (tweet?.retweetedStatus) != nil {
-          let retweet = Tweet.tweetAsDictionary((tweet?.retweetedStatus!)!)
-          self.rtCount = retweet.retweetCount
-        } else {
-          self.rtCount = tweet?.retweetCount
-        }
-        
-        print("Retweeting the Tweet. Retweet count is now \(self.rtCount!)")
-        
-        self.retweetStatus = true
-        self.retweetCountLabel.text = String(describing: self.rtCount!)
-        self.retweetCountLabel.textColor = UIColor(red:0.05, green:0.87, blue:0.11, alpha:1.0)
-        self.retweetButton.setImage(#imageLiteral(resourceName: "retweetGreenFill16"), for: .normal)
-        
-      } , failure: { (error: Error) -> () in
-        print("Error: \(error.localizedDescription)")
-      })
-
-    } else if retweetStatus == true {
-      
-      performUnRetweet()
-    }
-
-    }
   
-  func performUnRetweet() {
-
-    TwitterClient.sharedInstance.unRetweet(params: ["id": originalTweetID!], success: { (unretweeted) -> () in
-      
-      self.retweetStatus = false
-      self.rtCount = (unretweeted?.retweetCount)!-1
-      self.retweetCountLabel.text = String(describing: self.rtCount!)
-      self.retweetCountLabel.textColor = UIColor.darkGray
-      self.retweetButton.setImage(#imageLiteral(resourceName: "retweet_greyFill16"), for: .normal)
-
-      print("Un-retweeting the Tweet. Retweet count is now \(self.rtCount!)")
-      
-    } , failure: { (error: Error) -> () in
-      print("Error: \(error.localizedDescription)")
-    })
+    self.tweetActionDelegate.onRetweetButtonClicked(tweetCell: self)
   }
-  
   
   // MARK: - REPLY TO TWEET 
   
@@ -243,33 +143,36 @@ class TweetCell: UITableViewCell {
   
   // MARK: - LAYOUT FOR FAVORITES AND RETWEETS
   
+  func setFavoriteLabels() {
+    
+      if tweet.favorited! {
+        self.favoriteCountLabel.textColor = UIColor.red
+        self.saveButton.setImage(#imageLiteral(resourceName: "unsave_redFill16"), for: .normal)
+      } else if tweet.favorited == false {
+        self.favoriteCountLabel.textColor = UIColor.darkGray
+        self.saveButton.setImage(#imageLiteral(resourceName: "save_greyFill16"), for: .normal)
+      }
+  }
 
-  func setLabels() {
-  
-    if tweet.favorited! {
-      self.favoriteCountLabel.textColor = UIColor.red
-      self.saveButton.setImage(#imageLiteral(resourceName: "unsave_redFill16"), for: .normal)
-    } else if tweet.favorited == false {
-      self.favoriteCountLabel.textColor = UIColor.darkGray
-      self.saveButton.setImage(#imageLiteral(resourceName: "save_greyFill16"), for: .normal)
-    }
+  func setRetweetLabels() {
     
     if tweet.retweeted! {
-      self.retweetCountLabel.textColor = UIColor(red:0.05, green:0.87, blue:0.11, alpha:1.0)
-      self.retweetButton.setImage(#imageLiteral(resourceName: "retweetGreenFill16"), for: .normal)
-      
-    } else if tweet.retweeted == false {
-      self.retweetCountLabel.textColor = UIColor.darkGray
-      self.retweetButton.setImage(#imageLiteral(resourceName: "retweet_greyFill16"), for: .normal)
+        self.retweetCountLabel.textColor = UIColor(red:0.05, green:0.87, blue:0.11, alpha:1.0)
+        self.retweetButton.setImage(#imageLiteral(resourceName: "retweetGreenFill16"), for: .normal)
+      }  else if tweet.retweeted == false {
+        self.retweetCountLabel.textColor = UIColor.darkGray
+        self.retweetButton.setImage(#imageLiteral(resourceName: "retweet_greyFill16"), for: .normal)
+      }
     }
     
+
+  func setReplyButtonStyling() {
     self.replyButton.setImage(#imageLiteral(resourceName: "reply_grey16"), for: .normal)
     self.replyButton.setImage(#imageLiteral(resourceName: "reply_tweetBlue16"), for: .highlighted)
-    
   }
-  
 
-  }
+}
+
 
 
 

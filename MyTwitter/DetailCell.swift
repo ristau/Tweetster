@@ -46,7 +46,7 @@ class DetailCell: UITableViewCell {
       
       profileImage.layer.cornerRadius = 3
       profileImage.clipsToBounds = true
-    
+      
   }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

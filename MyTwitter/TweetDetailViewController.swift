@@ -8,14 +8,14 @@
 
 import UIKit
 
-class TweetDetailViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, DetailCellDelegator {
+class TweetDetailViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, DetailCellDelegator, TweetAction {
 
   
   @IBOutlet weak var tableView: UITableView!
   
   var tweet: Tweet!
   var replies: [Tweet]!
-  
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -24,37 +24,37 @@ class TweetDetailViewController: UIViewController, UITableViewDataSource, UITabl
       tableView.dataSource = self
       tableView.delegate = self
       
-      tableView.estimatedRowHeight = 200
       tableView.rowHeight = UITableViewAutomaticDimension
       
       tableView.reloadData()
       
   }
   
+
+  
+  
   // MARK: - TABLEVIEW LOADING METHODS
   
   public func numberOfSections(in tableView: UITableView) -> Int {
-    return 4
+    return 3
   }
   
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     
     switch section {
       
-    case 0, 1, 2, 3:
+    case 0, 1, 2 :
       return 1
     
-   // case 4:
-     // return 10
       
     default:
       return 0
     }
   }
   
+  
+  
   func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-   
-
     
     switch indexPath.section {
       
@@ -64,9 +64,10 @@ class TweetDetailViewController: UIViewController, UITableViewDataSource, UITabl
     case 1:
       return 200
       
-    case 2,3:
-      return 50
-      
+    case 2:
+      return 100
+
+    
     default:
       return 44
     }
@@ -77,6 +78,7 @@ class TweetDetailViewController: UIViewController, UITableViewDataSource, UITabl
     
     let cell = UITableViewCell()
     cell.selectionStyle = .none
+    
     
     if indexPath.section == 0 {
       let cell = tableView.dequeueReusableCell(withIdentifier: "DetailCell", for: indexPath) as! DetailCell
@@ -90,13 +92,9 @@ class TweetDetailViewController: UIViewController, UITableViewDataSource, UITabl
     }
     
     if indexPath.section == 2 {
-      let cell = tableView.dequeueReusableCell(withIdentifier: "RetweetFavCell", for: indexPath) as! RetweetFavCell
-      cell.tweet = tweet
-    }
-    
-    if indexPath.section == 3 {
       let cell = tableView.dequeueReusableCell(withIdentifier: "ActionsCell", for: indexPath) as! ActionsCell
-      cell.tweet = tweet 
+      cell.tweet = tweet
+      cell.ActionCellDelegate = self
     }
     
     cell.contentView.setNeedsLayout()
@@ -116,6 +114,75 @@ class TweetDetailViewController: UIViewController, UITableViewDataSource, UITabl
   @IBAction func composeTweet(_ sender: UIBarButtonItem) {
     print("Going to compose tweet") 
   }
+
+  
+// MARK: - TweetAction Protocol Methods
+  
+  func onDetailFavButtonClicked(tweetCell: ActionsCell) {
+    
+    if tweetCell.tweet.favorited == false {
+      
+      TwitterClient.sharedInstance.createFav(params: ["id": tweetCell.tweetID], success: { (tweet) -> () in
+      
+        tweetCell.tweet.favoritesCount = Tweet.getFavCount(tweet: tweet!)
+        tweetCell.favoriteCountLabel.text = String(describing: tweetCell.tweet.favoritesCount!)
+        tweetCell.tweet.favorited = true
+        tweetCell.setFavoriteLabels()
+        print("Saved Tweet. Fav count is: \(tweet!.favoritesCount!) and \(tweetCell.tweet.favoritesCount!). Status is \(tweetCell.tweet.favorited!)")
+        
+      }, failure: { (error: Error) -> () in
+        print("Could not successfully save tweet.  Error: \(error.localizedDescription)")
+      })
+      
+    } else if tweetCell.tweet.favorited == true {
+      TwitterClient.sharedInstance.unSaveAsFavorite(params: ["id": tweetCell.tweetID!], success: { (tweet) -> () in
+        tweetCell.tweet.favoritesCount = Tweet.getFavCount(tweet: tweet!)
+        tweetCell.favoriteCountLabel.text = String(describing: tweetCell.tweet.favoritesCount!)
+        tweetCell.tweet.favorited = false
+        tweetCell.setFavoriteLabels()
+        print("Removed from saved tweets.  Fav Count is \(tweet!.favoritesCount!) and \(tweetCell.tweet.favoritesCount!). Status is \(tweetCell.tweet.favorited!)")
+        
+        
+        
+      }, failure: { (error: Error) -> () in
+        print("Error: \(error.localizedDescription)")
+      })
+    }
+  }
+  
+  func onDetailRetweetButtonClicked(tweetCell: ActionsCell) {
+  
+    if tweetCell.tweet.retweeted == false {
+      
+      TwitterClient.sharedInstance.retweet(params: ["id": tweetCell.tweetID!], success: { (tweet) -> () in
+        
+        tweetCell.tweet.retweetCount = (tweet?.retweetCount)!
+        tweetCell.retweetCountLabel.text = String(describing: tweetCell.tweet.retweetCount!)
+        tweetCell.tweet.retweeted = true
+        tweetCell.setRetweetLabels()
+        print("Retweeted. RT count is: \(tweet!.retweetCount!). Status is \(tweet!.retweeted!)")
+        
+      } , failure: { (error: Error) -> () in
+        print("Error: \(error.localizedDescription)")
+      })
+    } else if tweetCell.tweet.retweeted == true {
+      
+      TwitterClient.sharedInstance.unRetweet(params: ["id": tweetCell.tweetID!], success: { (unretweeted) -> () in
+        
+        tweetCell.tweet.retweetCount = ((unretweeted?.retweetCount)!-1)
+        tweetCell.retweetCountLabel.text = String(describing: tweetCell.tweet.retweetCount!)
+        tweetCell.tweet.retweeted = false
+        tweetCell.setRetweetLabels()
+        print("Unretweeted. RT count is: \(unretweeted!.retweetCount!). Status is \(unretweeted!.retweeted!)")
+        
+      } , failure: { (error: Error) -> () in
+        print("Error: \(error.localizedDescription)")
+      })
+    }
+
+  }
+  
+  
   
     // MARK: - Navigation
 
@@ -133,6 +200,14 @@ class TweetDetailViewController: UIViewController, UITableViewDataSource, UITabl
         
       }
     }
-  
-
 }
+
+extension TweetAction {
+  
+  func onFavButtonClicked(tweetCell: TweetCell){}
+  func onRetweetButtonClicked(tweetCell: TweetCell){}
+  func onProfileImageClicked(tweet: Tweet){}
+  
+}
+
+

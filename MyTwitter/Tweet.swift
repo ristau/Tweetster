@@ -14,11 +14,13 @@ class Tweet: NSObject {
   var text: String?
   var timestamp: Date?
   var retweetCount: Int? = 0
+  var tweetFavCount: Int? = 0
   var favoritesCount: Int? = 0
   var favorited: Bool?
   var retweeted: Bool?
   var id: NSNumber?
   var idStr: String?
+  var tweetID: String?
   var retweetedStatus: NSDictionary?
   var currentUserRetweet: NSDictionary?
   
@@ -46,6 +48,7 @@ class Tweet: NSObject {
 
     retweetedStatus = dictionary["retweeted_status"] as? NSDictionary
     currentUserRetweet = dictionary["current_user_retweet"] as? NSDictionary
+    
   
 //     ['in_reply_to_status_id_str']
     
@@ -54,6 +57,33 @@ class Tweet: NSObject {
   
   
   //MARK: - Convenience Methods
+  
+  class func getFavCount(tweet: Tweet) -> Int {
+    
+    if tweet.retweetedStatus != nil {
+      let retweet = Tweet.tweetAsDictionary(tweet.retweetedStatus!)
+      tweet.tweetFavCount = retweet.favoritesCount
+    } else {
+      tweet.tweetFavCount = tweet.favoritesCount
+    }
+    
+    return tweet.tweetFavCount!
+  }
+  
+  class func getTweetID(tweet: Tweet) -> String? {
+    
+    if tweet.retweetedStatus != nil {
+      let retweet = Tweet.tweetAsDictionary(tweet.retweetedStatus!)
+      tweet.tweetID = retweet.idStr!
+    } else {
+      tweet.tweetID = tweet.idStr!
+    }
+    
+    return tweet.tweetID
+  }
+  
+  
+  
   
   // This method gives us tweets as an array of dictionaries
   class func tweetsWithArray(dictionaries: [NSDictionary]) -> [Tweet] {

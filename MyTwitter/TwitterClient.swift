@@ -147,11 +147,9 @@ class TwitterClient: BDBOAuth1SessionManager {
     // getting the tweets
     post("1.1/favorites/create.json", parameters: params, progress: nil, success: { (task:  URLSessionDataTask, response: Any) -> Void in
       
-      //api.twitter.com/1.1/favorites/create.json?id=243138128959913986
-      //\(params!).json
-      
       let tweet = Tweet.tweetAsDictionary(response as! NSDictionary)
-     
+      print("Tweet Count after action: \(tweet.favoritesCount!)")
+      
       success(tweet)
       
     }, failure: { (task: URLSessionDataTask?, error: Error) -> Void in
@@ -221,7 +219,6 @@ class TwitterClient: BDBOAuth1SessionManager {
     post("1.1/statuses/unretweet/\(params!["id"]!).json", parameters: params, progress: nil, success: { (task:  URLSessionDataTask, response: Any) -> Void in
       
       let unretweeted = Tweet.tweetAsDictionary(response as! NSDictionary)
-      print("Successfully performed the unretweet. New retweet count is: \(unretweeted.retweetCount!)")
       success(unretweeted)
       
     }, failure: { (task: URLSessionDataTask?, error: Error) -> Void in

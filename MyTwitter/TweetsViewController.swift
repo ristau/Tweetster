@@ -9,20 +9,19 @@
 import UIKit
 
 
-class TweetsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate {
+class TweetsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, TweetAction {
   
   var tweets: [Tweet]?
   var tweetID: String?
   var tweet: Tweet?
   
-  var saveCountLabel: UILabel?
-  var saveButton: UIButton?
-
+  
   @IBOutlet weak var logoutButton: UIButton!
 
   // infinite scrolling properties
   var isMoreDataLoading = false
   var loadingMoreView: InfiniteScrollActivityView?
+
 
   // UIRefreshControl
   let refreshControl = UIRefreshControl()
@@ -31,8 +30,6 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        self.navigationItem.title = "Timeline"
       
         // Set up Infinite Scroll loading indicator
         let frame = CGRect(x: 0, y: tableView.contentSize.height, width: tableView.bounds.size.width, height: InfiniteScrollActivityView.defaultHeight)
@@ -62,15 +59,15 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
   
 
   override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(true)
     self.tableView.reloadData()
+    
+    let navBar = self.navigationController?.navigationBar
+    navBar?.isTranslucent = false
+    navBar?.barTintColor =  UIColor(red:0.00, green:0.67, blue:0.93, alpha:1.0) // hex 00ACED
+    self.navigationItem.title = "Timeline"
   }
   
-  
-  override func viewDidAppear(_ animated: Bool) {
-    super.viewDidAppear(true)
-    self.tableView.reloadData()
-  }
- 
 
   // MARK: - TableView Methods
   
@@ -82,14 +79,14 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     
     let cell = tableView.dequeueReusableCell(withIdentifier: "TweetCell", for: indexPath) as! TweetCell
-  
-
-    //cell.backgroundColor = UIColor(red:0.92, green:0.98, blue:0.99, alpha:1.0) // hex# ebfbfd // color for retweet and save
 
     cell.selectionStyle = .none
     
     if let tweet = tweets?[indexPath.row] {
       cell.tweet = tweet
+      cell.tweetActionDelegate = self
+
+      cell.saveButton.tag = indexPath.row
       cell.profileButton.tag = indexPath.row
       cell.replyButton.tag = indexPath.row
     }
@@ -101,6 +98,11 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
   }
   
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    
+    print("Row \(indexPath.row) selected")
+    
+    let cell = tableView.dequeueReusableCell(withIdentifier: "TweetCell", for: indexPath) as! TweetCell
+    cell.backgroundColor = UIColor.red
     
     tableView.reloadData()
     
@@ -199,43 +201,79 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
     })
   }
 
+  // MARK: - Tweet Action Protocol
   
-  
-  
-// MARK: - SAVING & UNSAVING AS FAVORITE
-  
- @IBAction func onSave(_ sender: UIButton!) {
-
-      let buttonTag = (self.saveButton?.tag)!
-  
-      tweet = tweets?[buttonTag]
-  
-      TwitterClient.sharedInstance.createFav(params: ["id": tweet!.idStr!], success: { (tweet) -> () in
-      
-          print("Saving TweetID: \(tweet!.idStr!) to favorites. New Status is: \(tweet!.favorited!).  FavCount is: \(tweet!.favoritesCount!)")
+  func onFavButtonClicked(tweetCell: TweetCell){
+    
+    if tweetCell.tweet.favorited == false {
+     
+      TwitterClient.sharedInstance.createFav(params: ["id": tweetCell.tweetID], success: { (tweet) -> () in
         
-        }, failure: { (error: Error) -> () in
-          print("Could not successfully save tweet.  Error: \(error.localizedDescription)")
+        tweetCell.tweet.favoritesCount = Tweet.getFavCount(tweet: tweet!)
+        tweetCell.favoriteCountLabel.text = String(describing: tweetCell.tweet.favoritesCount!)
+        tweetCell.tweet.favorited = true
+        tweetCell.setFavoriteLabels()
+        print("Saved Tweet. Fav count is: \(tweet!.favoritesCount!) and \(tweetCell.tweet.favoritesCount!) Status is \(tweetCell.tweet.favorited!)")
+        
+       }, failure: { (error: Error) -> () in
+        print("Could not successfully save tweet.  Error: \(error.localizedDescription)")
       })
-  
-      tableView.reloadData()
+
+    } else if tweetCell.tweet.favorited == true {
+      TwitterClient.sharedInstance.unSaveAsFavorite(params: ["id": tweetCell.tweetID!], success: { (tweet) -> () in
+        
+        tweetCell.tweet.favoritesCount = Tweet.getFavCount(tweet: tweet!)
+        tweetCell.favoriteCountLabel.text = String(describing: tweetCell.tweet.favoritesCount!)
+        tweetCell.tweet.favorited = false
+        tweetCell.setFavoriteLabels()
+        print("Removed from saved tweets.  Fav Count is \(tweet!.favoritesCount!) and \(tweetCell.tweet.favoritesCount!) . Status is \(tweetCell.tweet.favorited!)")
+        
+        
+        
+      }, failure: { (error: Error) -> () in
+        print("Error: \(error.localizedDescription)")
+      })
     }
   
+  }
   
-  func unSaveAsFavorite() {
+  func onRetweetButtonClicked(tweetCell: TweetCell){
     
-    TwitterClient.sharedInstance.unSaveAsFavorite(params: ["id": tweetID!], success: { (tweet) -> () in
+    if tweetCell.tweet.retweeted == false {
+    
+    TwitterClient.sharedInstance.retweet(params: ["id": tweetCell.tweetID!], success: { (tweet) -> () in
       
-      print("Removing from favorites")
-
-      print("Status after unsaving: \(tweet!.favorited!)")
-      self.saveCountLabel?.textColor = UIColor(red:0.12, green:0.51, blue:0.59, alpha:1.0)
-      self.saveButton?.setImage(#imageLiteral(resourceName: "save24"), for: .normal)
-      self.tableView.reloadData()
-    }, failure: { (error: Error) -> () in
+      tweetCell.tweet.retweetCount = (tweet?.retweetCount!)
+      tweetCell.retweetCountLabel.text = String(describing: tweetCell.tweet.retweetCount!)
+      tweetCell.tweet.retweeted = true
+      tweetCell.setRetweetLabels()
+      print("Retweeted. RT count is: \(tweet!.retweetCount!). Status is \(tweet!.retweeted!)")
+    
+    } , failure: { (error: Error) -> () in
       print("Error: \(error.localizedDescription)")
     })
+    } else if tweetCell.tweet.retweeted == true {
+      
+      TwitterClient.sharedInstance.unRetweet(params: ["id": tweetCell.tweetID!], success: { (unretweeted) -> () in
+        
+        tweetCell.tweet.retweetCount = ((unretweeted?.retweetCount!)!-1)
+        tweetCell.retweetCountLabel.text = String(describing: tweetCell.tweet.retweetCount!)
+        tweetCell.tweet.retweeted = false
+        tweetCell.setRetweetLabels()
+        print("Unretweeted. RT count is: \(unretweeted!.retweetCount!). Status is \(unretweeted!.retweeted!)")
+        
+      } , failure: { (error: Error) -> () in
+        print("Error: \(error.localizedDescription)")
+      })
+    }
   }
+  
+  func onProfileImageClicked(tweet: Tweet){
+    
+  }
+  
+  
+// MARK: - On Profile Tap 
   
   
   @IBAction func onProfileTap(_ sender: Any) {
@@ -265,13 +303,12 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
     
       if segue.identifier == "Detail" {
-        
+   
         let cell = sender as! TweetCell
         let sendingTweet = cell.tweet
+  
         let detailVC = segue.destination as! TweetDetailViewController
         detailVC.tweet = sendingTweet
-        detailVC.replies = tweets // update this for replies 
-        
       }
       
       if segue.identifier == "FromTableViewToProfileView"{
@@ -306,9 +343,16 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
         replyVC.isReply = true
 
       }
-      
-      
 
      }
-  
   }
+
+
+
+extension TweetAction {
+  func onDetailFavButtonClicked(tweetCell: ActionsCell){
+    // leaving this empty
+  }
+  func onDetailRetweetButtonClicked(tweetCell: ActionsCell) {}
+}
+

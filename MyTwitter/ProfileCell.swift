@@ -23,6 +23,7 @@ class ProfileCell: UITableViewCell {
   @IBOutlet weak var favoritesCountLabel: UILabel!
   
   
+  
   var user: User! {
     
     didSet {
