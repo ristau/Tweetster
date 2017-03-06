@@ -81,7 +81,6 @@ class TweetCell: UITableViewCell {
         } else if date.timeIntervalSinceReferenceDate > oneDayAgo.timeIntervalSinceReferenceDate {
           dateComponentsFormatter.allowedUnits = [NSCalendar.Unit.hour]
           let hourDifference = dateComponentsFormatter.string(from: date, to: currentDate)
-          print("hour diff: \(hourDifference!)")
           dateTextLabel.text = hourDifference! + " ago"
           
         } else {

@@ -60,12 +60,12 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
 
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(true)
-    self.tableView.reloadData()
     
     let navBar = self.navigationController?.navigationBar
     navBar?.isTranslucent = false
     navBar?.barTintColor =  UIColor(red:0.00, green:0.67, blue:0.93, alpha:1.0) // hex 00ACED
     self.navigationItem.title = "Timeline"
+    self.tableView.reloadData()
   }
   
 
@@ -325,11 +325,7 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
         let button = sender as! UIButton
         let index = button.tag
         let tweet = tweets?[index]
-        print("TWEET TO SEND IS: \(tweet!.text!)")
-        
         let userToSend = tweet!.user
-        print("USER TO BE VIEWED IS: \(tweet!.user!.name!)")
-      
         let profileVC = segue.destination as! ProfileViewController
         profileVC.user = userToSend
         

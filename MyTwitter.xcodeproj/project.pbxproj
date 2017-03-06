@@ -95,6 +95,14 @@
 			name = API;
 			sourceTree = "<group>";
 		};
+		E51D26E11E6CE45500FA6C45 /* UI Related */ = {
+			isa = PBXGroup;
+			children = (
+				E51D4FEA1E4503EF00161CE4 /* InfiniteScrollActivityView.swift */,
+			);
+			name = "UI Related";
+			sourceTree = "<group>";
+		};
 		E5564F051E4EB84A0043BBCD /* Custom Cells */ = {
 			isa = PBXGroup;
 			children = (
@@ -128,6 +136,7 @@
 		E5BE200D1E2E9ACD00B0FE28 /* MyTwitter */ = {
 			isa = PBXGroup;
 			children = (
+				E51D26E11E6CE45500FA6C45 /* UI Related */,
 				E5564F051E4EB84A0043BBCD /* Custom Cells */,
 				E5166F0E1E35D325002F5E01 /* API */,
 				E5166F091E35C93D002F5E01 /* Models */,
@@ -146,7 +155,6 @@
 			children = (
 				E5BE20211E2E9C4700B0FE28 /* LoginViewController.swift */,
 				E5166F111E35EC8A002F5E01 /* TweetsViewController.swift */,
-				E51D4FEA1E4503EF00161CE4 /* InfiniteScrollActivityView.swift */,
 				E5564F081E4EBE540043BBCD /* TweetDetailViewController.swift */,
 				E5564F141E4EE8EC0043BBCD /* ProfileViewController.swift */,
 				E5564F181E4F19390043BBCD /* ComposeTweetViewController.swift */,

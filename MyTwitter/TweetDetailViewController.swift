@@ -27,9 +27,16 @@ class TweetDetailViewController: UIViewController, UITableViewDataSource, UITabl
       tableView.rowHeight = UITableViewAutomaticDimension
       
       tableView.reloadData()
-      
-  }
+    }
   
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(true)
+    let navBar = self.navigationController?.navigationBar
+    navBar?.isTranslucent = false
+    navBar?.barTintColor =  UIColor(red:0.00, green:0.67, blue:0.93, alpha:1.0) // hex 00ACED
+    self.navigationItem.title = "Detail"
+    self.tableView.reloadData()
+  }
 
   
   
