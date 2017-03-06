@@ -83,10 +83,10 @@ The following **optional** features are implemented:
 
 - [X] When composing, you should have a countdown for the tweet limit.
 - [X] After creating a new tweet, a user should be able to view it in the timeline immediately without refetching the timeline from the network.
-- [ ] Profile Page
+- [X] Profile Page
    - [ ] Implement the paging view for the user description.
    - [ ] As the paging view moves, increase the opacity of the background screen. See the actual Twitter app for this effect
-   - [ ] Pulling down the profile page should blur and resize the header image.
+   - [X] Pulling down the profile page should blur and resize the header image.
 - [ ] Account switching
    - [ ] Long press on tab bar to bring up Account view with animation
    - [ ] Tap account to switch to
@@ -96,24 +96,25 @@ The following **optional** features are implemented:
 The following **additional** features are implemented:
 
 - [X] Added reply button to the TweetCell in the TweetsViewController
+- [X] Customized NavBar in Profile Cell (transparent, using profile banner as background image)
 
 
 Please list two areas of the assignment you'd like to **discuss further with your peers** during the next class (examples include better ways to implement something, how to extend your app in certain ways, etc):
 
 1. Implement unwind segue when traversing back after a segue as a way of passing data 
-2. I would like to get more familiar with Core Animation
+2. Core Animation: I'd like to rework the image resizing and blur, not displaying exactly as I would like 
 
 ## Video Walkthrough 
 
 Here's a walkthrough of implemented user stories:
 
-<img src='http://i.imgur.com/41udklc.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='http://i.imgur.com/Jmm58fI.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 ## Notes
 
-Describe any challenges encountered while building the app.
+Describe any challenges encountered while building the app: Building transitions
 
 ## License
 
