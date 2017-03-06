@@ -95,8 +95,11 @@ The following **optional** features are implemented:
 
 The following **additional** features are implemented:
 
-- [X] Added reply button to the TweetCell in the TweetsViewController
-- [X] Customized NavBar in Profile Cell (transparent, using profile banner as background image)
+- [X]  User can reply to tweets
+- [X]  Animation added to reply button when being selected 
+- [X]  In addition to countdown, character limit is programmatically implemented
+- [X]  User can see a tweet was retweeted or liked after restarting the app
+- [X]  Customized NavBar in Profile Cell (transparent, using profile banner as background image)
 
 
 Please list two areas of the assignment you'd like to **discuss further with your peers** during the next class (examples include better ways to implement something, how to extend your app in certain ways, etc):
