@@ -100,7 +100,7 @@ The following **additional** features are implemented:
 - [X]  In addition to countdown, character limit is programmatically implemented
 - [X]  User can see a tweet was retweeted or liked after restarting the app
 - [X]  Customized NavBar in Profile Cell (transparent, using profile banner as background image)
-- [X]  Implemented scrollview for displaying custom nav bar based on scrolling offset
+- [X]  Implemented scrollview for displaying profice vc custom nav bar based on scrolling offset
 
 
 
